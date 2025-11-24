@@ -1,0 +1,30 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "A simple and efficient backend API for a carpooling web application built with node.js,Express, and MangoDB.",
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "nasseranabgaoui"
+  },
+  "license": "ISC",
+  "author": "Nassera Nabgaoui",
+  "contributors": [
+    {
+      "name": "Nassera",
+      "email": "Nasseranabgaoui@gmail.com"
+    }
+  ],
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "mongodb": "^7.0.0",
+    "nodemon": "^3.1.11"
+  }
+}
