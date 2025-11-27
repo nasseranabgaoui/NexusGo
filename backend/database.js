@@ -9,9 +9,7 @@ const connectDB = async () => {
         : process.env.MONGO_URI_LOCAL;
 
     await mongoose.connect(uri, {
-      dbName: "Nexusgo", // optional if Atlas URI already includes DB
-      useNewUrlParser: true,
-      useUnifiedTopology: true
+      dbName: "Nexusgo" // optional if Atlas URI already includes DB
     });
 
     console.log(`MongoDB connected (${process.env.MONGO_ENV})`);
