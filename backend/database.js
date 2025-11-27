@@ -1,28 +1,22 @@
-const { MongoClient } = require("mongodb");
+const mongoose = require("mongoose");
 
-const uri = "mongodb://localhost:27017";
-const client = new MongoClient(uri);
+const connectDB = async () => {
+  try {
+    const uri =
+      process.env.MONGO_ENV === "atlas"
+        ? process.env.MONGO_URI_ATLAS
+        : process.env.MONGO_URI_LOCAL;
 
-let db;
+    const conn = await mongoose.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
 
-async function connectDB() {
-    try {
-        await client.connect();
-        console.log(" Connecté à MongoDB");
+    console.log(`MongoDB connected (${process.env.MONGO_ENV}): ${conn.connection.host}`);
+  } catch (err) {
+    console.error("MongoDB connection error:", err.message);
+    process.exit(1);
+  }
+};
 
-        db = client.db("Nexusgo"); 
-        return db;
-    } catch (err) {
-        console.error("Erreur connexion MongoDB :", err);
-    }
-}
-
-function getDB() {
-    if (!db) {
-        throw new Error("La base MongoDB n'est pas encore connectée");
-    }
-    return db;
-}
-
-module.exports = { connectDB, getDB };
-
+module.exports = { connectDB };
