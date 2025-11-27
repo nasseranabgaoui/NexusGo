@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { getDB } = require("../database");
+const User = require("../models/User"); // Mongoose model
 
 // Génère un token pour l'utilisateur
 function generateToken(user) {
@@ -17,29 +17,19 @@ exports.login = async (req, res) => {
     try {
         const { email, motDePasse } = req.body;
 
-        // Vérification des champs
         if (!email || !motDePasse) {
             return res.status(400).json({ message: "Email and motDePasse required" });
         }
 
-        const db = getDB();
+        // Chercher l'utilisateur via Mongoose
+        const user = await User.findOne({ email });
 
-        // Chercher l'utilisateur avec ce mail
-        const user = await db.collection("users").findOne({ email });
-
-        if (!user) {
+        if (!user || user.motDePasse !== motDePasse) {
             return res.status(401).json({ message: "Invalid credentials" });
         }
 
-        // Vérifier mot de passe (SANS bcrypt)
-        if (user.motDePasse !== motDePasse) {
-            return res.status(401).json({ message: "Invalid credentials" });
-        }
-
-        // Générer token
         const token = generateToken(user);
 
-        // Réponse
         return res.status(200).json({
             message: "Login successful",
             token,
@@ -57,4 +47,3 @@ exports.login = async (req, res) => {
         return res.status(500).json({ message: "Internal server error" });
     }
 };
-
