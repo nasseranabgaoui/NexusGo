@@ -14,8 +14,7 @@ const userSchema = new mongoose.Schema({
 userSchema.set("toJSON", {
   transform: (doc, ret) => {
     ret.id = ret._id;       // rename _id to id
-    delete ret._id;         // remove original _id  // hide password
-    return ret;
+    delete ret._id;         // remove original _id  
   }
 });
 
