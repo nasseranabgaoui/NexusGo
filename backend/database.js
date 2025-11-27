@@ -2,17 +2,19 @@ const mongoose = require("mongoose");
 
 const connectDB = async () => {
   try {
+    // Choose URI based on environment
     const uri =
       process.env.MONGO_ENV === "atlas"
         ? process.env.MONGO_URI_ATLAS
         : process.env.MONGO_URI_LOCAL;
 
-    const conn = await mongoose.connect(uri, {
+    await mongoose.connect(uri, {
+      dbName: "Nexusgo", // optional if Atlas URI already includes DB
       useNewUrlParser: true,
-      useUnifiedTopology: true,
+      useUnifiedTopology: true
     });
 
-    console.log(`MongoDB connected (${process.env.MONGO_ENV}): ${conn.connection.host}`);
+    console.log(`MongoDB connected (${process.env.MONGO_ENV})`);
   } catch (err) {
     console.error("MongoDB connection error:", err.message);
     process.exit(1);
