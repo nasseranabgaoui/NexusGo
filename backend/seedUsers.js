@@ -1,13 +1,11 @@
 require("dotenv").config();
-const { MongoClient } = require("mongodb");
-
-const uri = process.env.MONGO_URI;
-const dbName = process.env.MONGO_DB;
-
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const User = require("./models/User"); 
 const users = [
   {
     email: "gimli@shortbutangry.com",
-    motDePasse: "AndMyAxe",
+    motDePasse: "AndMyAxe", 
     nom: "SonOfGloin",
     prenom: "Gimli",
     telephone: "0602020202"
@@ -37,24 +35,32 @@ const users = [
 
 async function seed() {
   try {
-    if (!uri) throw new Error("MONGO_URI missing in .env");
-    if (!dbName) throw new Error("MONGO_DB missing in .env");
+    await mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/Nexusgo");
+    console.log("Connecté à MongoDB pour le seed");
 
-    const client = new MongoClient(uri);
-    await client.connect();
-    const db = client.db(dbName);
+    // Nettoyer la collection existante pour éviter les doublons
+    await User.deleteMany({});
+    console.log("Anciens utilisateurs supprimés");
 
-    const collection = db.collection("users");
+    // Hacher les mots de passe et préparer les utilisateurs
+    const usersWithHashedPasswords = await Promise.all(
+      users.map(async (u) => {
+        const hashedPassword = await bcrypt.hash(u.motDePasse, 10);
+        return { ...u, motDePasse: hashedPassword };
+      })
+    );
 
-    await collection.deleteMany();
-    await collection.insertMany(users);
+    // Insérer les nouveaux utilisateurs
+    await User.insertMany(usersWithHashedPasswords);
+    console.log("Utilisateurs insérés avec succès !");
 
-    console.log(" Users inserted successfully!");
-    await client.close();
+    process.exit();
   } catch (err) {
-    console.error(" Seed error:", err);
+    console.error("Erreur seed:", err);
+    process.exit(1);
   }
 }
 
 seed();
+
 

@@ -1,50 +1,52 @@
 const express = require("express");
 const router = express.Router();
-const Booking = require("../models/Booking"); // Mongoose model
+const Booking = require("../models/Booking");
+const Ride = require("../models/Ride");
 
-// Get all bookings
-router.get("/", async (req, res) => {
-  try {
-    const bookings = await Booking.find();
-    res.json(bookings); // JSON will already have id instead of _id
-  } catch (err) {
-    res.status(500).json({ error: "Erreur serveur" });
-  }
-});
-
-// Create a new booking
+// Création d’une réservation avec décrémentation des places (Version simplifiée)
 router.post("/", async (req, res) => {
-  try {
-    const booking = new Booking(req.body);
-    await booking.save();
-    res.json({ message: "Réservation créée", id: booking.id });
-  } catch (err) {
-    res.status(500).json({ error: "Erreur serveur" });
-  }
+    try {
+        const { idProposition, emailPassager } = req.body;
+
+        // 1. Vérifier si le trajet existe
+        const ride = await Ride.findById(idProposition);
+
+        if (!ride) {
+            return res.status(404).json({ message: "Trajet introuvable" });
+        }
+
+        // 2. Vérifier s'il reste des places
+        if (ride.nbPlaces <= 0) {
+            return res.status(400).json({ message: "Désolé, ce trajet est complet !" });
+        }
+
+        // 3. Décrémenter le nombre de places et sauvegarder le trajet
+        ride.nbPlaces -= 1;
+        await ride.save();
+
+        // 4. Créer la réservation
+        const newBooking = new Booking({
+            idProposition,
+            emailPassager
+        });
+        await newBooking.save();
+
+        res.status(201).json({ message: "Réservation confirmée", booking: newBooking });
+
+    } catch (err) {
+        console.error("Erreur réservation:", err);
+        res.status(500).json({ error: "Erreur serveur lors de la réservation" });
+    }
 });
 
-// Update a booking partially
-router.patch("/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const booking = await Booking.findByIdAndUpdate(id, req.body, { new: true });
-    if (!booking) return res.status(404).json({ error: "Réservation non trouvée" });
-    res.json({ message: "Réservation modifiée", booking });
-  } catch (err) {
-    res.status(500).json({ error: "Erreur serveur" });
-  }
-});
-
-// Delete a booking
-router.delete("/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const booking = await Booking.findByIdAndDelete(id);
-    if (!booking) return res.status(404).json({ error: "Réservation non trouvée" });
-    res.json({ message: "Réservation supprimée" });
-  } catch (err) {
-    res.status(500).json({ error: "Erreur serveur" });
-  }
+// Récupérer les réservations
+router.get("/", async (req, res) => {
+    try {
+        const bookings = await Booking.find().populate("idProposition");
+        res.json(bookings);
+    } catch (err) {
+        res.status(500).json({ error: "Erreur serveur" });
+    }
 });
 
 module.exports = router;

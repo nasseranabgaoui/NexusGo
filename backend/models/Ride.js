@@ -1,23 +1,16 @@
 const mongoose = require("mongoose");
 
-const rideSchema = new mongoose.Schema({
-  idProposition: { type: Number, required: true },
-  emailConducteur: { type: String, required: true },
-  villeDepart: { type: String, required: true },
-  villeArrivee: { type: String, required: true },
-  date: { type: Number, required: true },
-  nbPlaces: { type: Number, required: true },
-  prix: { type: Number, required: true }
-}, {
-  versionKey: false
-});
-
-rideSchema.set("toJSON", {
-  transform: (doc, ret) => {
-    ret.id = ret._id;
-    delete ret._id;
-    return ret;
-  }
-});
+const rideSchema = new mongoose.Schema(
+  {
+    emailConducteur: { type: String, required: true, ref: "User" }, // Référence à l'email ou ID user
+    villeDepart: { type: String, required: true },   // Ajouté selon besoins recherche
+    villeArrivee: { type: String, required: true },  // Ajouté selon besoins recherche
+    date: { type: Number, required: true },          // Format AAMMJJ (ex: 251230) [cite: 10]
+    nbPlaces: { type: Number, required: true, min: 0 },
+    prix: { type: Number, required: true }
+  },
+  { timestamps: true }
+);
 
 module.exports = mongoose.model("Ride", rideSchema);
+

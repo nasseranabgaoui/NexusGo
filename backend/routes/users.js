@@ -1,47 +1,62 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/User");
+const { getDB } = require("../database");
+const { ObjectId } = require("mongodb");
 
-// GET /users - récupération de tous les utilisateurs
+// Récupération de tous les trajets
 router.get("/", async (req, res) => {
-  try {
-    const users = await User.find();
-    res.json(users); // toJSON transform already renames _id to id
-  } catch (err) {
-    res.status(500).json({ error: "Erreur serveur" });
-  }
+    try {
+        const rides = await getDB().collection("rides").find().toArray();
+        res.json(rides);
+    } catch (err) {
+        res.status(500).json({ error: "Erreur serveur" });
+    }
 });
 
-// POST /users - création d’un utilisateur
+// Création d’un trajet
 router.post("/", async (req, res) => {
-  try {
-    const newUser = await User.create(req.body);
-    res.json({ message: "Utilisateur créé", id: newUser.id }); // use id instead of _id
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+    try {
+        const body = req.body;
+        const result = await getDB().collection("rides").insertOne(body);
+        res.json({ message: "Trajet créé", id: result.insertedId });
+    } catch (err) {
+        res.status(500).json({ error: "Erreur serveur" });
+    }
 });
 
-// PATCH /users/:id - modification partielle
+// Modification partielle d’un trajet
 router.patch("/:id", async (req, res) => {
-  try {
-    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!updatedUser) return res.status(404).json({ error: "Utilisateur non trouvé" });
-    res.json({ message: "Utilisateur modifié", user: updatedUser });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+    try {
+        const id = req.params.id;
+
+        await getDB()
+            .collection("rides")
+            .updateOne(
+                { _id: new ObjectId(id) },
+                { $set: req.body }
+            );
+
+        res.json({ message: "Trajet modifié" });
+    } catch (err) {
+        res.status(500).json({ error: "Erreur serveur" });
+    }
 });
 
-// DELETE /users/:id - suppression
+// Suppression d’un trajet
 router.delete("/:id", async (req, res) => {
-  try {
-    const deletedUser = await User.findByIdAndDelete(req.params.id);
-    if (!deletedUser) return res.status(404).json({ error: "Utilisateur non trouvé" });
-    res.json({ message: "Utilisateur supprimé" });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+    try {
+        const id = req.params.id;
+
+        await getDB()
+            .collection("rides")
+            .deleteOne({ _id: new ObjectId(id) });
+
+        res.json({ message: "Trajet supprimé" });
+    } catch (err) {
+        res.status(500).json({ error: "Erreur serveur" });
+    }
 });
 
 module.exports = router;
+
+

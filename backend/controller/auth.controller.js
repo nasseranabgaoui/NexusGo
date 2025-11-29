@@ -1,49 +1,40 @@
-const jwt = require("jsonwebtoken");
-const User = require("../models/User"); // Mongoose model
+const bcrypt = require("bcrypt");
+const User = require("../models/User");
 
-// Génère un token pour l'utilisateur
-function generateToken(user) {
-    return jwt.sign(
-        {
-            id: user._id,
-            email: user.email,
-        },
-        process.env.JWT_SECRET,
-        { expiresIn: process.env.JWT_EXPIRES_IN }
-    );
-}
-
-exports.login = async (req, res) => {
+exports.register = async (req, res) => {
     try {
-        const { email, motDePasse } = req.body;
+        const { email, motDePasse, nom, prenom, telephone } = req.body;
 
-        if (!email || !motDePasse) {
-            return res.status(400).json({ message: "Email and motDePasse required" });
+        if (!email || !motDePasse || !nom || !prenom || !telephone) {
+            return res.status(400).json({ message: "Tous les champs sont requis" });
         }
 
-        // Chercher l'utilisateur via Mongoose
-        const user = await User.findOne({ email });
-
-        if (!user || user.motDePasse !== motDePasse) {
-            return res.status(401).json({ message: "Invalid credentials" });
+        // Vérification Mongoose
+        const userExists = await User.findOne({ email });
+        if (userExists) {
+            return res.status(400).json({ message: "Cet email est déjà utilisé" });
         }
 
-        const token = generateToken(user);
+        const hashedPassword = await bcrypt.hash(motDePasse, 10);
 
-        return res.status(200).json({
-            message: "Login successful",
-            token,
-            user: {
-                id: user._id,
-                email: user.email,
-                nom: user.nom,
-                prenom: user.prenom,
-                telephone: user.telephone
-            }
+        const newUser = await User.create({
+            email,
+            motDePasse: hashedPassword,
+            nom,
+            prenom,
+            telephone
+        });
+
+        res.status(201).json({
+            message: "Utilisateur créé avec succès",
+            user: { id: newUser._id, email: newUser.email }
         });
 
     } catch (error) {
-        console.error("Login error:", error);
-        return res.status(500).json({ message: "Internal server error" });
+        console.error("Erreur inscription:", error);
+        res.status(500).json({ message: "Erreur serveur" });
     }
 };
+
+
+

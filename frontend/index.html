@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusGo - Carpooling</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <section id="auth-view" class="view">
+        <div class="container">
+            <h1>NexusGo</h1>
+            <div class="card login-card">
+                <h2>Login</h2>
+                <form id="loginForm">
+                    <input type="email" id="email" placeholder="Email" required value="legolas@aimbot.com">
+                    <input type="password" id="password" placeholder="Password" required value="NeverMiss">
+                    <button type="submit">Sign In</button>
+                </form>
+                <p id="loginError" class="error"></p>
+            </div>
+        </div>
+    </section>
+
+    <section id="app-view" class="view hidden">
+        <nav>
+            <div class="logo">NexusGo</div>
+            <div class="user-info">
+                <span id="userDisplay">User</span>
+                <button onclick="logout()" class="btn-logout">Logout</button>
+            </div>
+        </nav>
+
+        <div class="main-content">
+            
+            <div class="card">
+                <h3>Propose a Ride</h3>
+                <form id="proposeForm">
+                    <div class="row">
+                        <input type="text" id="villeDepart" placeholder="Departure City (e.g., Paris)" required>
+                        <input type="text" id="villeArrivee" placeholder="Arrival City (e.g., Lyon)" required>
+                    </div>
+                    <div class="row">
+                        <input type="date" id="dateInput" required>
+                        <input type="number" id="prix" placeholder="Price (€)" required>
+                        <input type="number" id="nbPlaces" placeholder="Seats" required>
+                    </div>
+                    <button type="submit">Publish Ride</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h3>Search for a Ride</h3>
+                <form id="searchForm">
+                    <div class="row">
+                        <input type="text" id="searchDepart" placeholder="Departure">
+                        <input type="text" id="searchArrivee" placeholder="Arrival">
+                        <input type="date" id="searchDate">
+                    </div>
+                    <button type="submit" class="btn-secondary">Search</button>
+                </form>
+                <div id="resultsArea"></div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
