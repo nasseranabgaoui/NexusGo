@@ -1,26 +1,41 @@
 const API_URL = "https://nexusgo.onrender.com";
 
-//Éléments du DOM
+
 const authView = document.getElementById('auth-view');
+const registerView = document.getElementById('register-view');
 const appView = document.getElementById('app-view');
 const userDisplay = document.getElementById('userDisplay');
 
-//Gestion de l'état 
+function showLogin() {
+    authView.classList.remove("hidden");
+    registerView.classList.add("hidden");
+    appView.classList.add("hidden");
+}
+function showRegister() {
+    authView.classList.add("hidden");
+    registerView.classList.remove("hidden");
+    appView.classList.add("hidden");
+}
+
+document.getElementById("showRegister").onclick = showRegister;
+document.getElementById("showLogin").onclick = showLogin;
+
+
+
 function checkAuth() {
     const token = localStorage.getItem('token');
     if (token) {
         authView.classList.add('hidden');
+        registerView.classList.add('hidden');
         appView.classList.remove('hidden');
         userDisplay.innerText = "Welcome, " + localStorage.getItem('userPrenom');
     } else {
-        authView.classList.remove('hidden');
-        appView.classList.add('hidden');
+        showLogin();
     }
 }
-
 checkAuth();
 
-//Authentification
+
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const email = document.getElementById('email').value;
@@ -30,10 +45,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         const res = await fetch(`${API_URL}/auth/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-                email: email, 
-                motDePasse: password 
-            })
+            body: JSON.stringify({ email, motDePasse: password })
         });
 
         const data = await res.json();
@@ -42,20 +54,49 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
             localStorage.setItem('token', data.token);
             localStorage.setItem('userEmail', data.user.email);
             localStorage.setItem('userPrenom', data.user.prenom);
-            checkAuth(); 
+            checkAuth();
         } else {
             document.getElementById('loginError').innerText = data.message;
         }
     } catch (err) { console.error(err); }
 });
 
-//Déconnexion
-window.logout = function() {
+
+
+document.getElementById("registerForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const prenom = document.getElementById("regPrenom").value;
+    const email = document.getElementById("regEmail").value;
+    const motDePasse = document.getElementById("regPassword").value;
+
+    try {
+        const res = await fetch(`${API_URL}/auth/register`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ prenom, email, motDePasse })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+            alert("Account created! You can now sign in.");
+            showLogin();
+        } else {
+            document.getElementById("registerError").innerText = data.message;
+        }
+    } catch (err) {
+        console.error(err);
+    }
+});
+
+
+window.logout = function () {
     localStorage.clear();
-    checkAuth();
+    showLogin();
 };
 
-//Utilitaires de Date
+
 function formatToSixDigits(dateStr) {
     if (!dateStr) return null;
     const date = new Date(dateStr);
@@ -70,7 +111,7 @@ function formatFromSixDigits(num) {
     return `${str.slice(4,6)}/${str.slice(2,4)}/20${str.slice(0,2)}`;
 }
 
-// Proposer un trajet
+// PROPOSER RIDE
 document.getElementById('proposeForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     
@@ -83,26 +124,25 @@ document.getElementById('proposeForm').addEventListener('submit', async (e) => {
         prix: Number(document.getElementById('prix').value)
     };
 
-    try {
-        const res = await fetch(`${API_URL}/rides`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(body)
-        });
-        
-        if (res.ok) {
-            alert("Ride published successfully");
-            document.getElementById('proposeForm').reset();
-        } else {
-            const data = await res.json();
-            alert("Error: " + (data.message || data.error));
-        }
-    } catch (err) { console.error(err); }
+    const res = await fetch(`${API_URL}/rides`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+    });
+
+    if (res.ok) {
+        alert("Ride published successfully");
+        document.getElementById('proposeForm').reset();
+    } else {
+        const data = await res.json();
+        alert("Error: " + (data.message || data.error));
+    }
 });
 
-// Rechercher un trajet
+// SEARCH RIDE
 document.getElementById('searchForm').addEventListener('submit', async (e) => {
     e.preventDefault();
+
     const depart = document.getElementById('searchDepart').value;
     const arrivee = document.getElementById('searchArrivee').value;
     const dateRaw = document.getElementById('searchDate').value;
@@ -112,11 +152,9 @@ document.getElementById('searchForm').addEventListener('submit', async (e) => {
     if (arrivee) url += `villeArrivee=${arrivee}&`;
     if (dateRaw) url += `date=${formatToSixDigits(dateRaw)}`;
 
-    try {
-        const res = await fetch(url);
-        const rides = await res.json();
-        displayResults(rides);
-    } catch (err) { console.error(err); }
+    const res = await fetch(url);
+    const rides = await res.json();
+    displayResults(rides);
 });
 
 function displayResults(rides) {
@@ -133,35 +171,34 @@ function displayResults(rides) {
         div.className = 'result-item';
         div.innerHTML = `
             <div>
-                <strong>${ride.villeDepart} -> ${ride.villeArrivee}</strong><br>
+                <strong>${ride.villeDepart} → ${ride.villeArrivee}</strong><br>
                 Date: ${formatFromSixDigits(ride.date)} | Price: ${ride.prix}€ | Seats: ${ride.nbPlaces}
             </div>
-            <button onclick="bookRide('${ride._id}')" style="width:auto">Book</button>
+            <button onclick="bookRide('${ride._id}')">Book</button>
         `;
         zone.appendChild(div);
     });
 }
 
-// Réserver un trajet
+// BOOK
 window.bookRide = async function(id) {
     if (!confirm("Confirm booking?")) return;
     
-    try {
-        const res = await fetch(`${API_URL}/bookings`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-                idProposition: id, 
-                emailPassager: localStorage.getItem('userEmail') 
-            })
-        });
+    const res = await fetch(`${API_URL}/bookings`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+            idProposition: id, 
+            emailPassager: localStorage.getItem('userEmail') 
+        })
+    });
 
-        if (res.ok) {
-            alert("Booking successful");
-            document.getElementById('searchForm').dispatchEvent(new Event('submit'));
-        } else {
-            const data = await res.json();
-            alert("Error: " + (data.message || data.error));
-        }
-    } catch (err) { console.error(err); }
+    if (res.ok) {
+        alert("Booking successful");
+        document.getElementById('searchForm').dispatchEvent(new Event('submit'));
+    } else {
+        const data = await res.json();
+        alert("Error: " + (data.message || data.error));
+    }
 };
+

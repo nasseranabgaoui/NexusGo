@@ -8,21 +8,45 @@
 </head>
 <body>
 
+    <!-- LOGIN VIEW -->
     <section id="auth-view" class="view">
         <div class="container">
             <h1>NexusGo</h1>
             <div class="card login-card">
                 <h2>Login</h2>
                 <form id="loginForm">
-                    <input type="email" id="email" placeholder="Email" required value="legolas@aimbot.com">
-                    <input type="password" id="password" placeholder="Password" required value="NeverMiss">
+                    <input type="email" id="email" placeholder="Email" required value="">
+                    <input type="password" id="password" placeholder="Password" required value="">
                     <button type="submit">Sign In</button>
                 </form>
                 <p id="loginError" class="error"></p>
+
+                <p>No account? <a href="#" id="showRegister">Create one</a></p>
             </div>
         </div>
     </section>
 
+
+    <!-- REGISTER VIEW -->
+    <section id="register-view" class="view hidden">
+        <div class="container">
+            <h1>Create Account</h1>
+            <div class="card login-card">
+                <form id="registerForm">
+                    <input type="text" id="regPrenom" placeholder="First name" required>
+                    <input type="email" id="regEmail" placeholder="Email" required>
+                    <input type="password" id="regPassword" placeholder="Password" required>
+                    <button type="submit">Register</button>
+                </form>
+                <p id="registerError" class="error"></p>
+
+                <p>Already have an account? <a href="#" id="showLogin">Sign in</a></p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- APP VIEW -->
     <section id="app-view" class="view hidden">
         <nav>
             <div class="logo">NexusGo</div>
@@ -33,13 +57,12 @@
         </nav>
 
         <div class="main-content">
-            
             <div class="card">
                 <h3>Propose a Ride</h3>
                 <form id="proposeForm">
                     <div class="row">
-                        <input type="text" id="villeDepart" placeholder="Departure City (e.g., Paris)" required>
-                        <input type="text" id="villeArrivee" placeholder="Arrival City (e.g., Lyon)" required>
+                        <input type="text" id="villeDepart" placeholder="Departure City" required>
+                        <input type="text" id="villeArrivee" placeholder="Arrival City" required>
                     </div>
                     <div class="row">
                         <input type="date" id="dateInput" required>

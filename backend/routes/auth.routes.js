@@ -1,11 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-// Importer correctement connexController
-const connexController = require("../routes/connex"); // Chemin vers connex.js
+// Import du controller
+const connexController = require("../routes/connex");
 
-// Route de connexion
-router.post("/login", connexController.login); // Maintenant, on utilise connexController.login
+// Login
+router.post("/login", connexController.login);
+
+// Register (nouveau)
+router.post("/register", connexController.register);
 
 module.exports = router;
 
