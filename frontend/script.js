@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000";
+const API_URL = "https://nexusgo-api.onrender.com";
 
 //Éléments du DOM
 const authView = document.getElementById('auth-view');
