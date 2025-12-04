@@ -12,6 +12,7 @@
     <section id="auth-view" class="view">
         <div class="container">
             <h1>NexusGo</h1>
+
             <div class="card login-card">
                 <h2>Login</h2>
 
@@ -31,18 +32,27 @@
     <!-- ===================== APPLICATION VIEW ===================== -->
     <section id="app-view" class="view hidden">
 
+        <!-- HEADER with profile picture -->
         <nav>
             <div class="logo">NexusGo</div>
 
             <div class="user-info">
+                <img id="profilePic" 
+                     class="profile-pic" 
+                     src="https://i.pravatar.cc/150?img=5" 
+                     alt="Profile">
+
                 <span id="userDisplay">User</span>
                 <button onclick="logout()" class="btn-logout">Logout</button>
             </div>
         </nav>
 
+
+
+        <!-- MAIN CONTENT -->
         <div class="main-content">
 
-            <!-- PROPOSER UN TRAJET -->
+            <!-- PROPOSE A RIDE -->
             <div class="card">
                 <h3>Propose a Ride</h3>
 
@@ -64,7 +74,7 @@
 
 
 
-            <!-- RECHERCHER UN TRAJET -->
+            <!-- SEARCH FOR A RIDE -->
             <div class="card">
                 <h3>Search for a Ride</h3>
 
@@ -85,8 +95,10 @@
     </section>
 
 
+
     <!-- SCRIPT -->
     <script src="script.js"></script>
 </body>
 </html>
+
 
