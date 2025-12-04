@@ -1,102 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NexusGo - Carpooling</title>
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusGo - Covoiturage</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- ================= HERO SECTION ================= -->
-<header class="hero">
-    <nav class="topbar">
-        <div class="logo">NexusGo</div>
-        <div class="nav-right">
-            <img id="profilePic" class="profile-pic" 
-                 src="https://i.pravatar.cc/150?img=5" />
-            <span id="userDisplay" class="username"></span>
-            <button onclick="logout()" class="btn-logout">Logout</button>
+    <header class="hero">
+        <div class="hero-left">
+            <h1>NexusGo</h1>
+            <h2>Réservez et trouvez vos covoiturages facilement</h2>
         </div>
-    </nav>
 
-    <div id="auth-view" class="auth-box">
-        <h2>Se connecter</h2>
-        <form id="loginForm">
-            <input type="email" id="email" placeholder="Email" required />
-            <input type="password" id="password" placeholder="Mot de passe" required />
-            <button class="btn-primary" type="submit">Connexion</button>
-        </form>
-        <p id="loginError" class="error"></p>
-    </div>
+        <div class="hero-right">
+            <div class="user-info hidden" id="userBox">
+                <img id="userPhoto" src="https://i.pravatar.cc/80" />
+                <span id="userDisplay">Utilisateur</span>
+                <button onclick="logout()" class="logout-btn">Déconnexion</button>
+            </div>
+        </div>
+    </header>
 
-    <div id="app-view" class="search-box hidden">
-        <div class="search-grid">
+    <section class="search-panel">
+
+        <div class="search-box">
 
             <div class="input-wrapper">
                 <span class="icon">📍</span>
-                <input id="villeDepart" type="text" placeholder="Ville de départ" required />
+                <input type="text" placeholder="Ville de départ" id="searchDepart">
+                <ul class="autocomplete-list" id="autoDepart"></ul>
             </div>
 
             <div class="input-wrapper">
                 <span class="icon">🎯</span>
-                <input id="villeArrivee" type="text" placeholder="Ville d'arrivée" required />
+                <input type="text" placeholder="Ville d'arrivée" id="searchArrivee">
+                <ul class="autocomplete-list" id="autoArrivee"></ul>
             </div>
 
             <div class="input-wrapper">
                 <span class="icon">📅</span>
-                <input id="dateInput" type="date" required />
+                <input type="date" id="searchDate">
             </div>
 
-            <div class="input-wrapper">
-                <span class="icon">💺</span>
-                <input id="nbPlaces" type="number" placeholder="Places" required />
-            </div>
-
-            <button id="proposeSubmit" class="btn-primary" type="submit" form="proposeForm">Publier</button>
+            <button id="searchButton" class="search-btn">Rechercher</button>
 
         </div>
-    </div>
-</header>
+
+    </section>
+
+    <section id="resultsArea" class="results"></section>
 
 
-<!-- RESULTS + SECOND CARDS -->
-<section class="container">
-    <!-- Propose form invisible, mais utilisé par JS -->
-    <form id="proposeForm"></form>
-
-    <div class="card">
-        <h3>Rechercher un trajet</h3>
-
-        <form id="searchForm" class="search-form">
-            <div class="search-grid2">
-                <div class="input-wrapper">
-                    <span class="icon">📍</span>
-                    <input id="searchDepart" type="text" placeholder="Départ" />
-                </div>
-
-                <div class="input-wrapper">
-                    <span class="icon">🎯</span>
-                    <input id="searchArrivee" type="text" placeholder="Arrivée" />
-                </div>
-
-                <div class="input-wrapper">
-                    <span class="icon">📅</span>
-                    <input id="searchDate" type="date" />
-                </div>
-
-                <button class="btn-primary" type="submit">Rechercher</button>
-            </div>
-        </form>
-
-        <div id="resultsArea"></div>
-    </div>
-</section>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
