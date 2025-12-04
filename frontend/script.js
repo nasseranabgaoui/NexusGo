@@ -1,4 +1,4 @@
-const API_URL = "https://nexusgo-api.onrender.com";
+const API_URL = "https://nexusgo.onrender.com";
 
 //Éléments du DOM
 const authView = document.getElementById('auth-view');
@@ -9,19 +9,15 @@ const userDisplay = document.getElementById('userDisplay');
 function checkAuth() {
     const token = localStorage.getItem('token');
     if (token) {
-        // Utilisateur connecté : Afficher le tableau de bord
         authView.classList.add('hidden');
         appView.classList.remove('hidden');
-        // Afficher le prénom de l'utilisateur (stocké sous 'prenom' dans la BD)
         userDisplay.innerText = "Welcome, " + localStorage.getItem('userPrenom');
     } else {
-        // Utilisateur déconnecté : Afficher la page de connexion
         authView.classList.remove('hidden');
         appView.classList.add('hidden');
     }
 }
 
-// Vérification initiale au chargement
 checkAuth();
 
 //Authentification
@@ -34,19 +30,18 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         const res = await fetch(`${API_URL}/auth/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            // MAPPING : Variables JS -> Champs BD (Français)
             body: JSON.stringify({ 
                 email: email, 
                 motDePasse: password 
             })
         });
+
         const data = await res.json();
 
         if (res.ok) {
             localStorage.setItem('token', data.token);
             localStorage.setItem('userEmail', data.user.email);
-            // Stockage du 'prenom' pour l'affichage
-            localStorage.setItem('userPrenom', data.user.prenom); 
+            localStorage.setItem('userPrenom', data.user.prenom);
             checkAuth(); 
         } else {
             document.getElementById('loginError').innerText = data.message;
@@ -75,13 +70,10 @@ function formatFromSixDigits(num) {
     return `${str.slice(4,6)}/${str.slice(2,4)}/20${str.slice(0,2)}`;
 }
 
-//Fonctionnalités de l'application
-
 // Proposer un trajet
 document.getElementById('proposeForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     
-    // Construction de la charge utile en utilisant strictement les noms de champs de la BD
     const body = {
         emailConducteur: localStorage.getItem('userEmail'),
         villeDepart: document.getElementById('villeDepart').value,
@@ -115,7 +107,6 @@ document.getElementById('searchForm').addEventListener('submit', async (e) => {
     const arrivee = document.getElementById('searchArrivee').value;
     const dateRaw = document.getElementById('searchDate').value;
 
-    // Construction de la requête en utilisant les noms de champs de la BD pour le filtrage
     let url = `${API_URL}/rides?`;
     if (depart) url += `villeDepart=${depart}&`;
     if (arrivee) url += `villeArrivee=${arrivee}&`;
@@ -159,7 +150,6 @@ window.bookRide = async function(id) {
         const res = await fetch(`${API_URL}/bookings`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            // Utilisation des noms de champs de la BD pour la charge utile de réservation
             body: JSON.stringify({ 
                 idProposition: id, 
                 emailPassager: localStorage.getItem('userEmail') 
@@ -168,7 +158,6 @@ window.bookRide = async function(id) {
 
         if (res.ok) {
             alert("Booking successful");
-            // Rafraîchir la recherche pour mettre à jour le nombre de places
             document.getElementById('searchForm').dispatchEvent(new Event('submit'));
         } else {
             const data = await res.json();
