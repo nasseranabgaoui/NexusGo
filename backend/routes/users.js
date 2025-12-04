@@ -1,59 +1,36 @@
 const express = require("express");
 const router = express.Router();
-const { getDB } = require("../database");
-const { ObjectId } = require("mongodb");
+const User = require("../models/User");
 
-// Récupération de tous les trajets
+// 1. Récupérer tous les utilisateurs (GET /users)
 router.get("/", async (req, res) => {
     try {
-        const rides = await getDB().collection("rides").find().toArray();
-        res.json(rides);
+        // On récupère tout le monde SAUF le champ mot de passe (sécurité)
+        const users = await User.find().select("-motDePasse");
+        res.json(users);
     } catch (err) {
         res.status(500).json({ error: "Erreur serveur" });
     }
 });
 
-// Création d’un trajet
-router.post("/", async (req, res) => {
+// 2. Récupérer un seul utilisateur par son ID (GET /users/:id)
+router.get("/:id", async (req, res) => {
     try {
-        const body = req.body;
-        const result = await getDB().collection("rides").insertOne(body);
-        res.json({ message: "Trajet créé", id: result.insertedId });
+        const user = await User.findById(req.params.id).select("-motDePasse");
+        if (!user) return res.status(404).json({ message: "Utilisateur introuvable" });
+        res.json(user);
     } catch (err) {
         res.status(500).json({ error: "Erreur serveur" });
     }
 });
 
-// Modification partielle d’un trajet
-router.patch("/:id", async (req, res) => {
-    try {
-        const id = req.params.id;
-
-        await getDB()
-            .collection("rides")
-            .updateOne(
-                { _id: new ObjectId(id) },
-                { $set: req.body }
-            );
-
-        res.json({ message: "Trajet modifié" });
-    } catch (err) {
-        res.status(500).json({ error: "Erreur serveur" });
-    }
-});
-
-// Suppression d’un trajet
+// 3. Supprimer un utilisateur (DELETE /users/:id)
 router.delete("/:id", async (req, res) => {
     try {
-        const id = req.params.id;
-
-        await getDB()
-            .collection("rides")
-            .deleteOne({ _id: new ObjectId(id) });
-
-        res.json({ message: "Trajet supprimé" });
+        await User.findByIdAndDelete(req.params.id);
+        res.json({ message: "Utilisateur supprimé" });
     } catch (err) {
-        res.status(500).json({ error: "Erreur serveur" });
+        res.status(500).json({ error: "Erreur suppression" });
     }
 });
 

@@ -2,12 +2,13 @@ const mongoose = require("mongoose");
 
 const connectDB = async () => {
   try {
-    // Remplacez 'Nexusgo' par le nom de votre DB si différent
-    await mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/Nexusgo");
-    console.log("Connecté à MongoDB via Mongoose");
-  } catch (err) {
-    console.error("Erreur connexion MongoDB :", err);
-    process.exit(1);
+    // On demande à Mongoose d'utiliser l'adresse stockée dans le fichier .env
+    const conn = await mongoose.connect(process.env.MONGO_URI);
+    
+    console.log(`✅ MongoDB Connecté : ${conn.connection.host}`);
+  } catch (error) {
+    console.error(`Erreur : ${error.message}`);
+    process.exit(1); // Arrête le serveur si la base de données ne répond pas
   }
 };
 
