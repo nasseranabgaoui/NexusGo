@@ -6,57 +6,65 @@
     <title>NexusGo - Covoiturage</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-    <header class="hero">
-        <div class="hero-left">
+    <!-- LOGIN VIEW -->
+    <section id="auth-view" class="view">
+        <div class="login-container">
             <h1>NexusGo</h1>
-            <h2>Réservez et trouvez vos covoiturages facilement</h2>
-        </div>
+            <p class="subtitle">Connectez-vous pour continuer</p>
 
-        <div class="hero-right">
-            <div class="user-info hidden" id="userBox">
-                <img id="userPhoto" src="https://i.pravatar.cc/80" />
-                <span id="userDisplay">Utilisateur</span>
-                <button onclick="logout()" class="logout-btn">Déconnexion</button>
+            <div class="card login-card">
+                <form id="loginForm">
+                    <input type="email" id="email" placeholder="Email" required>
+                    <input type="password" id="password" placeholder="Mot de passe" required>
+                    <button type="submit">Connexion</button>
+                </form>
+                <p id="loginError" class="error"></p>
             </div>
         </div>
-    </header>
-
-    <section class="search-panel">
-
-        <div class="search-box">
-
-            <div class="input-wrapper">
-                <span class="icon">📍</span>
-                <input type="text" placeholder="Ville de départ" id="searchDepart">
-                <ul class="autocomplete-list" id="autoDepart"></ul>
-            </div>
-
-            <div class="input-wrapper">
-                <span class="icon">🎯</span>
-                <input type="text" placeholder="Ville d'arrivée" id="searchArrivee">
-                <ul class="autocomplete-list" id="autoArrivee"></ul>
-            </div>
-
-            <div class="input-wrapper">
-                <span class="icon">📅</span>
-                <input type="date" id="searchDate">
-            </div>
-
-            <button id="searchButton" class="search-btn">Rechercher</button>
-
-        </div>
-
     </section>
 
-    <section id="resultsArea" class="results"></section>
+    <!-- APP VIEW -->
+    <section id="app-view" class="view hidden">
 
+        <!-- NAV -->
+        <nav>
+            <div class="logo">NexusGo</div>
+            <div class="user-info">
+                <img id="userAvatar" src="https://i.imgur.com/jQY8F5F.png" alt="avatar">
+                <span id="userDisplay">Utilisateur</span>
+                <button onclick="logout()" class="btn-logout">Déconnexion</button>
+            </div>
+        </nav>
+
+        <!-- HERO SECTION -->
+        <div class="hero">
+            <h1>NexusGo</h1>
+            <p>Réservez et trouvez vos covoiturages facilement</p>
+
+            <!-- WHITE SEARCH CARD -->
+            <div class="search-card">
+
+                <form id="searchForm">
+                    <input type="text" id="searchDepart" placeholder="Ville de départ">
+                    <input type="text" id="searchArrivee" placeholder="Ville d'arrivée">
+                    <input type="date" id="searchDate">
+                    <button type="submit">Rechercher</button>
+                </form>
+
+            </div>
+        </div>
+
+        <!-- RESULTS -->
+        <div id="resultsArea"></div>
+
+    </section>
 
     <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
