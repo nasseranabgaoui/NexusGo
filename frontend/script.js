@@ -33,7 +33,7 @@ if (formulaireLogin) {
     });
 }
 
-// Vérification de la connexion
+// Vérification
 function verifierConnexion() {
     const token = localStorage.getItem("token");
     const prenom = localStorage.getItem("prenom");

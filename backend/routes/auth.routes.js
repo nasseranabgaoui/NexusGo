@@ -1,9 +1,7 @@
-const express = require("express");
-const router = express.Router();
+var express = require("express");
+var router = express.Router();
+var connexController = require("./connex");
 
-const connexController = require("../routes/connex");
-
-// LOGIN 
 router.post("/login", connexController.login);
 
 module.exports = router;
