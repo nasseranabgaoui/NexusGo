@@ -1,16 +1,22 @@
-const express = require("express");
-const cors = require("cors");
-const { connectDB } = require("./database");
-require("dotenv").config(); // Important de charger les variables d'env ici
+var express = require("express");
+var database = require("./database");
+require("dotenv").config();
 
-const app = express();
+var app = express();
 
-// Middleware
+// Middleware JSON
 app.use(express.json());
-app.use(cors());
 
-// Connexion DB
-connectDB();
+// Middleware CORS
+app.use(function (request, response, next) {
+    response.setHeader('Access-Control-Allow-Origin', '*');
+    response.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    response.setHeader('Access-Control-Allow-Headers', '*');
+    next();
+});
+
+// Connexion Base de données
+database.connectDB();
 
 // Routes
 app.use("/auth", require("./routes/auth.routes"));
@@ -18,11 +24,11 @@ app.use("/rides", require("./routes/rides"));
 app.use("/bookings", require("./routes/bookings"));
 app.use("/users", require("./routes/users")); 
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+// Lancement serveur
+var PORT = process.env.PORT || 3000;
+app.listen(PORT, function() {
+    console.log("Server running on http://localhost:" + PORT);
 });
-
 
 
 
