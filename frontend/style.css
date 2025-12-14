@@ -266,6 +266,24 @@ footer {
     .partners-section p { font-size: 1.3rem; }
     .logos-grid { justify-content: flex-start; gap: 25px; }
     .partner-logo { height: 70px; padding: 12px 20px; border-radius: 15px; }
+
+    @media (min-width: 601px) and (max-width: 1023px) {
+    .hero-container {
+        /* On limite la largeur pour que ça ne colle pas aux bords */
+        max-width: 80%; 
+        /* On centre le bloc */
+        margin: 40px auto; 
+        /* On garde un peu de padding interne */
+        padding: 30px;
+        /* On s'assure que la carte ne soit pas trop large non plus */
+    }
+    
+    .hero-card {
+        /* Une largeur max pour la carte elle-même */
+        max-width: 500px;
+        /* Centrer la carte dans le conteneur */
+        margin: 0 auto;
+    }
 }
 
 
