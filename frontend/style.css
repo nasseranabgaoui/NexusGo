@@ -164,7 +164,7 @@ nav {
     -webkit-appearance: none;
 }
 
-/* Bouton jaune (Recherche et Connexion) */
+/* Bouton rechercher */
 .btn-yellow {
     background: var(--kombo-yellow);
     color: #1a1a1a;
@@ -275,16 +275,16 @@ footer {
         justify-content: space-between;
         width: 98%;
         max-width: 1900px;
-        margin: 0 auto;
-        padding: 2vh 4vw;
-        gap: 8rem;
+        /* RÉDUCTION DU MARGE/PADDING VERTICAL POUR REMPLIR PLUS LA HAUTEUR */
+        padding: 4vh 4vw;
+        gap: 6rem; /* Légère réduction de l'écartement */
     }
 
     .hero-card {
-        padding: 5rem;
+        padding: 4rem; /* Légère réduction interne */
         border-radius: 40px;
         flex: 1.2;
-        min-width: 650px;
+        min-width: 600px; /* Légère réduction min-width */
         box-shadow: 0 50px 100px rgba(0,0,0,0.25);
     }
 
@@ -294,10 +294,10 @@ footer {
         border-bottom-width: 5px;
     }
 
-    .input-with-icon { margin-bottom: 30px; }
+    .input-with-icon { margin-bottom: 25px; }
     
     .input-with-icon input {
-        /* Hauteur XXL pour PC */
+        /* Hauteur XXL maintenue */
         height: 95px !important;
         padding: 0 30px 0 80px;
         font-size: 1.4rem;
@@ -310,11 +310,10 @@ footer {
     }
 
     .btn-yellow {
-        /* Augmentation de la taille du bouton sur PC */
-        padding: 30px;
-        font-size: 1.8rem;
+        padding: 25px; /* Légère réduction du padding du bouton */
+        font-size: 1.6rem; /* Légère réduction du texte */
         border-radius: 20px;
-        margin-top: 25px;
+        margin-top: 20px;
     }
 
     .hero-text {
@@ -324,17 +323,17 @@ footer {
     }
 
     .hero-text h1 {
-        font-size: 6rem;
-        margin-bottom: 50px;
+        font-size: 5rem; /* Réduction du titre pour mieux centrer verticalement */
+        margin-bottom: 40px;
     }
 
     .ratings {
-        font-size: 1.5rem;
-        padding: 15px 35px;
+        font-size: 1.6rem; /* Agrandissement du badge d'avis */
+        padding: 18px 35px;
     }
 
-    .partners-section { margin-top: 60px; }
-    .partners-section p { font-size: 1.3rem; }
-    .logos-grid { justify-content: flex-start; gap: 25px; }
-    .partner-logo { height: 70px; padding: 12px 20px; border-radius: 15px; }
+    .partners-section { margin-top: 40px; }
+    .partners-section p { font-size: 1.2rem; }
+    .logos-grid { justify-content: flex-start; gap: 20px; }
+    .partner-logo { height: 60px; padding: 10px 15px; border-radius: 12px; }
 }
