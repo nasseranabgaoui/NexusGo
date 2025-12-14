@@ -8,7 +8,7 @@ router.get("/", async function(req, res) {
         var villeDepart = req.query.villeDepart;
         var villeArrivee = req.query.villeArrivee;
         var date = req.query.date;
-        var prixMax = req.query.prixMax; // <-- Récupération du paramètre
+        var prixMax = req.query.prixMax; 
         
         var filter = {};
 
