@@ -20,7 +20,6 @@ if (loginForm) {
             const res = await fetch(API_URL + "/auth/login", {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                // Backend expects: email, motDePasse
                 body: JSON.stringify({ email: email, motDePasse: password })
             });
             const data = await res.json();
@@ -75,7 +74,6 @@ if (searchForm) {
         const arrival = document.getElementById("searchArrivee").value;
         const dateRaw = document.getElementById("searchDate").value;
         
-        // Backend expects: villeDepart, villeArrivee
         let url = API_URL + "/rides?villeDepart=" + departure + "&villeArrivee=" + arrival;
         
         if (dateRaw) {
@@ -143,7 +141,6 @@ if (proposeForm) {
             const res = await fetch(API_URL + "/rides", {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                // Backend expects French keys
                 body: JSON.stringify({
                     emailConducteur: email,
                     villeDepart: departure,
@@ -175,7 +172,6 @@ async function bookRide(rideId) {
         const res = await fetch(API_URL + "/bookings", {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            // Backend expects: idProposition, emailPassager
             body: JSON.stringify({ idProposition: rideId, emailPassager: email })
         });
         const data = await res.json();
@@ -202,7 +198,6 @@ function blockPastDates() {
 function formatDate(dateString) {
     if (!dateString) return null;
     const [year, month, day] = dateString.split("-");
-    // Converts 2025-12-30 to 251230
     return parseInt(year.substring(2) + month + day); 
 }
 

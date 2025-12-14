@@ -3,111 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexusGo - Covoiturage</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>NexusGo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <section id="auth-view" class="view">
-        <div class="login-container">
-            <h1 class="logo-text">NexusGo.</h1>
-            <p class="subtitle">Réservez et comparez tous les covoiturages</p>
-
+        <div class="login-wrapper">
+            <h1 class="brand-title">NexusGo.</h1>
             <div class="card login-card">
+                <h2>Bienvenue</h2>
                 <form id="loginForm">
-                    <div class="input-group">
-                        <i class="fas fa-envelope"></i>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-envelope"></i>
                         <input type="email" id="email" placeholder="Email" required>
                     </div>
-                    <div class="input-group">
-                        <i class="fas fa-lock"></i>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-lock"></i>
                         <input type="password" id="password" placeholder="Mot de passe" required>
                     </div>
-                    <button type="submit" class="btn-yellow">Connexion</button>
-                    <p id="loginError" class="error"></p>
+                    <button type="submit" class="btn-primary full-width">Se connecter</button>
+                    <p id="loginError" class="error-msg"></p>
                 </form>
             </div>
         </div>
     </section>
 
     <section id="app-view" class="view hidden">
-
+        
         <nav>
-            <div class="logo-text blue">NexusGo.</div>
-            <div class="user-actions">
-                <span id="userDisplay"><i class="fas fa-user-circle"></i> Utilisateur</span>
+            <div class="logo">NexusGo.</div>
+            <div class="user-menu">
+                <span id="userDisplay"><i class="fa-solid fa-user"></i> Invité</span>
                 <button onclick="logout()" class="btn-outline">Déconnexion</button>
             </div>
         </nav>
 
-        <div class="hero-section">
+        <div class="hero-container">
             
-            <div class="main-card">
+            <div class="hero-card">
+                
                 <div class="tabs">
                     <button class="tab-btn active" onclick="switchTab('search')">
-                        <i class="fas fa-search"></i> Rechercher
+                        <i class="fa-solid fa-magnifying-glass"></i> Rechercher
                     </button>
                     <button class="tab-btn" onclick="switchTab('propose')">
-                        <i class="fas fa-car"></i> Publier
+                        <i class="fa-solid fa-circle-plus"></i> Proposer
                     </button>
                 </div>
 
-                <form id="searchForm" class="tab-content active">
-                    <div class="input-row">
-                        <div class="input-group">
-                            <i class="far fa-circle"></i>
-                            <input type="text" id="searchDepart" placeholder="Ville de départ">
-                        </div>
+                <form id="searchForm" class="tab-content">
+                    <div class="input-with-icon">
+                        <i class="fa-regular fa-circle"></i>
+                        <input type="text" id="searchDepart" placeholder="Gare ou ville de départ">
                     </div>
-                    <div class="input-row">
-                        <div class="input-group">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <input type="text" id="searchArrivee" placeholder="Ville d'arrivée">
-                        </div>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <input type="text" id="searchArrivee" placeholder="Gare ou ville d'arrivée">
                     </div>
-                    <div class="input-row">
-                        <div class="input-group">
-                            <i class="far fa-calendar-alt"></i>
-                            <input type="date" id="searchDate">
-                        </div>
+                    <div class="input-with-icon">
+                        <i class="fa-regular fa-calendar"></i>
+                        <input type="date" id="searchDate">
                     </div>
                     <button type="submit" class="btn-yellow full-width">Rechercher</button>
                 </form>
 
                 <form id="proposeForm" class="tab-content hidden">
-                    <div class="input-group">
-                        <i class="far fa-circle"></i>
-                        <input type="text" id="proposeDepart" placeholder="Départ" required>
+                    <div class="input-with-icon">
+                        <i class="fa-regular fa-circle"></i>
+                        <input type="text" id="proposeDepart" placeholder="Ville de départ" required>
                     </div>
-                    <div class="input-group">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <input type="text" id="proposeArrivee" placeholder="Arrivée" required>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <input type="text" id="proposeArrivee" placeholder="Ville d'arrivée" required>
                     </div>
-                    <div class="two-cols">
-                        <div class="input-group">
-                            <i class="far fa-calendar-alt"></i>
+                    <div class="row">
+                        <div class="input-with-icon">
+                            <i class="fa-regular fa-calendar"></i>
                             <input type="date" id="proposeDate" required>
                         </div>
-                        <div class="input-group">
-                            <i class="fas fa-euro-sign"></i>
+                        <div class="input-with-icon">
+                            <i class="fa-solid fa-euro-sign"></i>
                             <input type="number" id="proposePrix" placeholder="Prix" required>
                         </div>
                     </div>
-                    <div class="input-group">
-                        <i class="fas fa-users"></i>
-                        <input type="number" id="proposePlaces" placeholder="Places dispo" required>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-users"></i>
+                        <input type="number" id="proposePlaces" placeholder="Nombre de places" required>
                     </div>
                     <button type="submit" class="btn-yellow full-width">Publier le trajet</button>
                 </form>
+
             </div>
 
             <div class="hero-text">
                 <h1>Réservez et comparez tous les covoiturages</h1>
-                <div class="stars">
-                    ⭐⭐⭐⭐⭐ <span>+1 000 000 voyageurs</span>
+                <div class="ratings">
+                    ⭐⭐⭐⭐⭐ <span>+1 000 000 étudiants</span>
                 </div>
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" alt="Logos" style="height: 30px; margin-top: 20px; opacity: 0.7;">
+
+                <div class="partners-section">
+                    <p>Nos partenaires :</p>
+                    <div class="logos-grid">
+                        
+                        <img src="https://upload.wikimedia.org/wikipedia/fr/3/33/Logo_universit%C3%A9_montpellier.png" 
+                             alt="Université Montpellier" class="partner-logo">
+
+                        <img src="https://sciences.edu.umontpellier.fr/wp-content/uploads/2022/06/Nouveau-Logo-FDS-V-Couleur-300x127.png" 
+                             alt="Faculté des Sciences" class="partner-logo">
+
+                        <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/0/05/Logo_SNCF_2011.svg/512px-Logo_SNCF_2011.svg.png" 
+                             alt="SNCF" class="partner-logo">
+
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Logo_TGV_inOui_2017.png/640px-Logo_TGV_inOui_2017.png" 
+                             alt="TGV Inoui" class="partner-logo">
+
+                        <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/8/82/BlaBlaCar_logo.svg/1200px-BlaBlaCar_logo.svg.png" 
+                             alt="BlaBlaCar" class="partner-logo">
+
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/FlixBus_logo.svg/1200px-FlixBus_logo.svg.png" 
+                             alt="FlixBus" class="partner-logo">
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -116,16 +135,13 @@
 
     </section>
 
-    <script src="script.js"></script>
     <script>
-        // Petit script juste pour gérer les onglets visuellement
-        function switchTab(tab) {
-            // Cacher tous les contenus
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        function switchTab(tabName) {
+            document.getElementById('searchForm').classList.add('hidden');
+            document.getElementById('proposeForm').classList.add('hidden');
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
 
-            // Montrer le bon
-            if(tab === 'search') {
+            if(tabName === 'search') {
                 document.getElementById('searchForm').classList.remove('hidden');
                 document.querySelectorAll('.tab-btn')[0].classList.add('active');
             } else {
@@ -134,6 +150,8 @@
             }
         }
     </script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
 

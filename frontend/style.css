@@ -1,172 +1,184 @@
-/* RESET */
+/* =========================================
+   RESET & GLOBAL
+   ========================================= */
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 
-/* COULEURS KOMBO */
 :root {
-    --primary-blue: #007bff; /* Bleu Kombo */
-    --light-blue: #e8f2ff;
-    --yellow: #FFD600;      /* Jaune bouton */
-    --yellow-hover: #e5c100;
-    --text-dark: #1a1a1a;
-    --grey-input: #f0f2f5;
+    --kombo-blue: #007bff;
+    --kombo-dark-blue: #0056b3;
+    --kombo-yellow: #fcd600;
+    --kombo-yellow-hover: #e5c100;
+    --bg-light: #f4f7f9;
+    --text-color: #333;
+    --text-white: #ffffff;
 }
 
 body {
-    background: linear-gradient(135deg, #2E94E8 0%, #007bff 100%);
+    background: linear-gradient(135deg, #3b9eff 0%, #007bff 100%);
     min-height: 100vh;
-    color: var(--text-dark);
+    color: var(--text-color);
+    overflow-x: hidden;
 }
 
-/* UTILITAIRES */
 .hidden { display: none !important; }
-.view { width: 100%; min-height: 100vh; }
+.full-width { width: 100%; }
 
-/* TEXTES */
-.logo-text { font-size: 32px; font-weight: 800; color: white; margin-bottom: 10px; }
-.logo-text.blue { color: var(--primary-blue); }
-.subtitle { color: rgba(255,255,255,0.9); font-size: 18px; margin-bottom: 30px; }
-
-/* BOUTONS */
-.btn-yellow {
-    background: var(--yellow);
-    color: var(--text-dark);
-    font-weight: 700;
-    border: none;
-    padding: 15px;
-    border-radius: 12px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: 0.2s;
-    width: 100%;
-}
-.btn-yellow:hover { transform: scale(1.02); background: var(--yellow-hover); }
-
-.btn-outline {
-    border: 2px solid var(--primary-blue);
-    background: transparent;
-    color: var(--primary-blue);
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-weight: 600;
-    cursor: pointer;
-}
-.btn-outline:hover { background: var(--light-blue); }
-
-/* INPUTS */
-.input-group {
-    background: var(--grey-input);
-    border-radius: 12px;
-    padding: 12px 15px;
-    display: flex;
-    align-items: center;
-    margin-bottom: 12px;
-    border: 1px solid transparent;
-}
-.input-group:focus-within { border-color: var(--primary-blue); background: white; }
-.input-group i { color: #888; margin-right: 12px; font-size: 18px; }
-.input-group input {
-    border: none;
-    background: transparent;
-    width: 100%;
-    outline: none;
-    font-size: 16px;
-    color: var(--text-dark);
-}
-
-/* LOGIN VIEW */
-.login-container {
+/* =========================================
+   LOGIN VIEW
+   ========================================= */
+.login-wrapper {
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    text-align: center;
+    padding: 20px;
 }
-.card {
+.brand-title { color: white; font-size: 3rem; margin-bottom: 20px; font-weight: 800; text-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+.login-card {
     background: white;
     padding: 40px;
-    border-radius: 24px;
-    width: 400px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    text-align: center;
 }
+.login-card h2 { margin-bottom: 25px; color: var(--kombo-blue); font-weight: 700; }
 
-/* APP VIEW - NAV */
+/* =========================================
+   NAVBAR
+   ========================================= */
 nav {
     background: white;
-    padding: 15px 50px;
+    padding: 15px 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: sticky; top: 0; z-index: 100;
 }
-.user-actions { display: flex; align-items: center; gap: 20px; font-weight: 500; }
+.logo { font-weight: 800; font-size: 24px; color: var(--kombo-blue); }
+.user-menu { display: flex; align-items: center; gap: 15px; }
+#userDisplay { font-weight: 600; color: var(--text-color); }
 
-/* HERO SECTION (LAYOUT) */
-.hero-section {
+/* =========================================
+   BOUTONS & INPUTS
+   ========================================= */
+.btn-primary { background: var(--kombo-blue); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 16px; }
+.btn-yellow {
+    background: var(--kombo-yellow);
+    color: #1a1a1a;
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    margin-top: 10px;
+}
+.btn-yellow:hover { background: var(--kombo-yellow-hover); transform: translateY(-2px); }
+.btn-outline { border: 2px solid var(--kombo-blue); background: transparent; color: var(--kombo-blue); padding: 6px 15px; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 14px; }
+.btn-outline:hover { background: var(--bg-light); }
+
+.input-with-icon { position: relative; margin-bottom: 15px; }
+.input-with-icon i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #888; font-size: 18px; }
+.input-with-icon input {
+    width: 100%;
+    padding: 14px 14px 14px 45px;
+    background: #f0f2f5;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    font-size: 15px;
+    transition: 0.3s;
+}
+.input-with-icon input:focus { background: white; border-color: var(--kombo-blue); outline: none; box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1); }
+.row { display: flex; gap: 10px; }
+
+/* =========================================
+   HERO SECTION
+   ========================================= */
+.hero-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 60px 10%;
-    gap: 80px;
+    padding: 60px 5%;
+    gap: 60px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-/* CARTE PRINCIPALE (GAUCHE) */
-.main-card {
+/* Carte Gauche (Agrandie) */
+.hero-card {
     background: white;
-    width: 450px;
-    border-radius: 20px;
-    padding: 25px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    padding: 40px;
+    border-radius: 24px;
+    width: 100%;
+    max-width: 550px; /* Carte plus large style Kombo */
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
 }
 
-/* ONGLETS */
-.tabs { display: flex; margin-bottom: 20px; border-bottom: 2px solid #eee; }
-.tab-btn {
-    flex: 1;
-    background: none;
-    border: none;
-    padding-bottom: 10px;
-    font-size: 16px;
-    font-weight: 600;
-    color: #888;
-    cursor: pointer;
-}
-.tab-btn.active {
-    color: var(--primary-blue);
-    border-bottom: 3px solid var(--primary-blue);
-}
-.two-cols { display: flex; gap: 10px; }
+.tabs { display: flex; border-bottom: 2px solid #f0f0f0; margin-bottom: 25px; }
+.tab-btn { flex: 1; background: none; border: none; padding: 12px; font-size: 16px; font-weight: 600; color: #888; cursor: pointer; border-bottom: 3px solid transparent; transition: 0.3s; }
+.tab-btn.active { color: var(--kombo-blue); border-bottom-color: var(--kombo-blue); }
+.tab-btn i { margin-right: 8px; }
 
-/* TEXTE HERO (DROITE) */
+/* Texte Droite */
 .hero-text { color: white; max-width: 500px; }
-.hero-text h1 { font-size: 48px; font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
-.stars { font-size: 18px; font-weight: 500; }
+.hero-text h1 { font-size: 3.5rem; line-height: 1.1; font-weight: 800; margin-bottom: 20px; }
+.ratings { font-size: 1.2rem; opacity: 0.95; font-weight: 500; background: rgba(255, 255, 255, 0.1); padding: 10px 20px; border-radius: 50px; display: inline-block; }
 
-/* RESULTATS */
-.results-container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
-.result-item {
+/* =========================================
+   SECTION PARTENAIRES (LOGOS)
+   ========================================= */
+.partners-section { margin-top: 40px; border-top: 1px solid rgba(255, 255, 255, 0.3); padding-top: 20px; }
+.partners-section p { font-size: 14px; opacity: 0.9; margin-bottom: 15px; font-weight: 600; color: white; }
+.logos-grid { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.partner-logo {
+    height: 45px;
+    width: auto;
+    max-width: 100px;
     background: white;
-    padding: 20px;
-    border-radius: 16px;
-    margin-bottom: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    transition: 0.2s;
-}
-.result-item:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
-.result-item button {
-    background: var(--primary-blue);
-    color: white;
-    border: none;
-    padding: 10px 20px;
+    padding: 5px 10px;
     border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
+    object-fit: contain;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
 }
-.result-item button:hover { background: #0056b3; }
+.partner-logo:hover { transform: scale(1.1); cursor: pointer; }
 
+/* =========================================
+   RESULTATS
+   ========================================= */
+.results-container { max-width: 800px; margin: 0 auto; padding: 0 20px 50px 20px; }
+.result-item {
+    background: white; padding: 20px; border-radius: 16px; margin-bottom: 15px;
+    display: flex; justify-content: space-between; align-items: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.2s; border: 1px solid rgba(0,0,0,0.05);
+}
+.result-item:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+.error-msg { color: #dc3545; margin-top: 10px; font-size: 0.9rem; }
+
+/* RESPONSIVE (MOBILE)
+    */
+@media (max-width: 1024px) {
+    .hero-container { flex-direction: column-reverse; text-align: center; padding: 40px 20px; gap: 40px; }
+    .hero-text h1 { font-size: 2.5rem; }
+    .logos-grid { justify-content: center; }
+}
+
+@media (max-width: 600px) {
+    nav { padding: 15px 20px; }
+    .logo { font-size: 20px; }
+    #userDisplay { font-size: 0; } #userDisplay i { font-size: 18px; }
+    .hero-text h1 { font-size: 2rem; }
+    .hero-card { padding: 20px; }
+    .tabs .tab-btn { font-size: 14px; padding: 10px 5px; }
+    .result-item { flex-direction: column; align-items: flex-start; gap: 15px; }
+    .result-item div:last-child { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px; }
+    .row { flex-direction: column; gap: 0; }
+}
 
 
 
