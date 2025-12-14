@@ -8,11 +8,18 @@ router.get("/", async function(req, res) {
         var villeDepart = req.query.villeDepart;
         var villeArrivee = req.query.villeArrivee;
         var date = req.query.date;
+        var prixMax = req.query.prixMax; // <-- Récupération du paramètre
+        
         var filter = {};
 
         if (villeDepart) filter.villeDepart = new RegExp(villeDepart, 'i');
         if (villeArrivee) filter.villeArrivee = new RegExp(villeArrivee, 'i');
         if (date) filter.date = Number(date);
+        
+        // Ajout du filtre Prix Max si présent
+        if (prixMax) {
+            filter.prix = { $lte: Number(prixMax) };
+        }
         
         filter.nbPlaces = { $gt: 0 };
 
@@ -35,4 +42,3 @@ router.post("/", async function(req, res) {
 });
 
 module.exports = router;
-

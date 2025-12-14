@@ -1,4 +1,4 @@
-const API_URL = "https://nexusgo.onrender.com";
+const API_URL = "https://nexusgo.onrender.com"; // Assure-toi que c'est la bonne URL locale ou distante
 
 document.addEventListener("DOMContentLoaded", function() {
     
@@ -27,10 +27,10 @@ document.addEventListener("DOMContentLoaded", function() {
                     localStorage.setItem("firstName", data.user.prenom);
                     localStorage.setItem("email", data.user.email);
                     checkAuth();
-                    showNotification("Connexion réussie !", "success"); // <-- Nouveau !
+                    showNotification("Connexion réussie !", "success");
                 } else {
                     document.getElementById("loginError").textContent = data.message;
-                    showNotification(data.message, "error"); // <-- Nouveau !
+                    showNotification(data.message, "error");
                 }
             } catch (error) {
                 console.error(error);
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // 3. Recherche
+    // 3. Recherche (MODIFIÉ)
     const searchForm = document.getElementById("searchForm");
     if (searchForm) {
         searchForm.addEventListener("submit", async function(event) {
@@ -47,10 +47,17 @@ document.addEventListener("DOMContentLoaded", function() {
             const departure = document.getElementById("searchDepart").value;
             const arrival = document.getElementById("searchArrivee").value;
             const dateRaw = document.getElementById("searchDate").value;
+            // Récupération du prix max
+            const priceMax = document.getElementById("searchPrixMax").value;
             
             let url = API_URL + "/rides?villeDepart=" + departure + "&villeArrivee=" + arrival;
+            
             if (dateRaw) {
                 url += "&date=" + formatDate(dateRaw);
+            }
+            // Ajout du paramètre à l'URL si rempli
+            if (priceMax) {
+                url += "&prixMax=" + priceMax;
             }
 
             try {
@@ -126,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
 
                 if (res.ok) {
-                    showNotification("Trajet publié avec succès !", "success"); // <-- Plus pro !
+                    showNotification("Trajet publié avec succès !", "success");
                     proposeForm.reset();
                 } else {
                     showNotification("Erreur lors de la publication.", "error");
@@ -138,9 +145,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 /* --- FONCTIONS UTILITAIRES --- */
 
-// Nouvelle fonction pour afficher les notifications "PRO"
 function showNotification(message, type = 'success') {
-    // Créer le conteneur si il n'existe pas
     let container = document.getElementById('toast-container');
     if (!container) {
         container = document.createElement('div');
@@ -148,18 +153,15 @@ function showNotification(message, type = 'success') {
         document.body.appendChild(container);
     }
 
-    // Créer la notification
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
     
-    // Icône selon le type
     const icon = type === 'success' ? '<i class="fa-solid fa-circle-check"></i>' : '<i class="fa-solid fa-circle-exclamation"></i>';
     
     toast.innerHTML = `${icon} <span>${message}</span>`;
     
     container.appendChild(toast);
 
-    // Supprimer après 3 secondes
     setTimeout(() => {
         toast.style.animation = 'fadeOut 0.5s forwards';
         setTimeout(() => {
@@ -203,7 +205,6 @@ function bookRide(rideId) {
     .then(data => {
         if(data.message && data.message.includes("confirmée")) {
              showNotification(data.message, "success");
-             
              document.getElementById("searchForm").dispatchEvent(new Event('submit'));
         } else {
              showNotification(data.message || "Erreur réservation", "error");
@@ -225,5 +226,4 @@ function formatDate(dateString) {
     const [year, month, day] = dateString.split("-");
     return parseInt(year.substring(2) + month + day); 
 }
-
 
