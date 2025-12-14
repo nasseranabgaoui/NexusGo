@@ -12,6 +12,7 @@
     --text-color: #333;
 }
 
+/* Corps de la page */
 body {
     background: linear-gradient(135deg, #3b9eff 0%, #007bff 100%);
     min-height: 100vh;
@@ -113,9 +114,9 @@ nav {
     z-index: 10;
 }
 
+/* Hauteur standard pour mobile et tablette (correction du champ date) */
 .input-with-icon input {
     width: 100%;
-    /* Hauteur unique pour Mobile/Tablette/Date */
     height: 55px !important;
     min-height: 55px;
     padding: 0 15px 0 45px;
@@ -154,6 +155,7 @@ nav {
     margin-bottom: 20px;
 }
 
+/* Avis clients */
 .ratings {
     font-size: 1rem;
     background: rgba(255, 255, 255, 0.2);
@@ -197,7 +199,7 @@ footer {
 }
 
 
-/* Version Tablette (Séparée du PC pour les marges) */
+/* Version Tablette (601px à 1023px) */
 @media (min-width: 601px) and (max-width: 1023px) {
     .hero-container {
         /* Limite la largeur pour laisser des marges sur les côtés */
@@ -209,7 +211,7 @@ footer {
     }
     
     .hero-card {
-        /* Assure que la carte est centrée dans le conteneur */
+        /* Assure que la carte est centrée */
         max-width: 480px;
         margin: 0 auto;
     }
@@ -228,7 +230,7 @@ footer {
 }
 
 
-/* Version PC */
+/* Version PC (1024px et plus) */
 @media (min-width: 1024px) {
     
     nav { padding: 25px 50px; }
@@ -261,7 +263,7 @@ footer {
     .input-with-icon { margin-bottom: 30px; }
     
     .input-with-icon input {
-        /* Hauteur XXL pour PC (doit rester ici) */
+        /* Hauteur XXL pour PC (écrasement pour grand écran) */
         height: 95px !important;
         padding: 0 30px 0 80px;
         font-size: 1.4rem;
@@ -301,5 +303,3 @@ footer {
     .logos-grid { justify-content: flex-start; gap: 25px; }
     .partner-logo { height: 70px; padding: 12px 20px; border-radius: 15px; }
 }
-
-
