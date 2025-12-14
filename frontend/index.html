@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NexusGo</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -100,6 +103,7 @@
 
             <div class="hero-text">
                 <h1>Réservez et comparez tous les covoiturages</h1>
+                
                 <div class="ratings">
                     ⭐⭐⭐⭐⭐ <span>+1 000 000 étudiants</span>
                 </div>
@@ -114,16 +118,16 @@
                         <img src="https://sciences.edu.umontpellier.fr/wp-content/uploads/2022/06/Nouveau-Logo-FDS-V-Couleur-300x127.png" 
                              alt="Faculté des Sciences" class="partner-logo">
 
-                        <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/0/05/Logo_SNCF_2011.svg/512px-Logo_SNCF_2011.svg.png" 
+                        <img src="https://logo.clearbit.com/sncf.com" 
                              alt="SNCF" class="partner-logo">
 
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Logo_TGV_inOui_2017.png/640px-Logo_TGV_inOui_2017.png" 
+                        <img src="https://logo.clearbit.com/sncf-connect.com" 
                              alt="TGV Inoui" class="partner-logo">
 
-                        <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/8/82/BlaBlaCar_logo.svg/1200px-BlaBlaCar_logo.svg.png" 
+                        <img src="https://logo.clearbit.com/blablacar.fr" 
                              alt="BlaBlaCar" class="partner-logo">
 
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/FlixBus_logo.svg/1200px-FlixBus_logo.svg.png" 
+                        <img src="https://logo.clearbit.com/flixbus.fr" 
                              alt="FlixBus" class="partner-logo">
                     </div>
                 </div>
@@ -137,10 +141,14 @@
 
     <script>
         function switchTab(tabName) {
+            // Masquer les deux formulaires
             document.getElementById('searchForm').classList.add('hidden');
             document.getElementById('proposeForm').classList.add('hidden');
+            
+            // Désactiver les onglets
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
 
+            // Activer le bon
             if(tabName === 'search') {
                 document.getElementById('searchForm').classList.remove('hidden');
                 document.querySelectorAll('.tab-btn')[0].classList.add('active');
