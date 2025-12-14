@@ -111,14 +111,12 @@
                 <div class="partners-section">
                     <p>Nos partenaires :</p>
                     <div class="logos-grid">
-                        
                         <img src="img/umtp.png" alt="Université Montpellier" class="partner-logo">
                         <img src="img/sncf.png" alt="SNCF" class="partner-logo">
                         <img src="img/blablacar.png" alt="BlaBlaCar" class="partner-logo">
                         <img src="img/fds.png" alt="Faculté des Sciences" class="partner-logo">
                         <img src="img/flixbus.png" alt="FlixBus" class="partner-logo">
-                        <img src="img/paypal.png" alt="FlixBus" class="partner-logo">
-
+                        <img src="img/paypal.png" alt="PayPal" class="partner-logo">
                     </div>
                 </div>
             </div>
@@ -126,6 +124,10 @@
         </div>
 
         <div id="resultsArea" class="results-container"></div>
+
+        <footer>
+            <p>&copy; 2025 NexusGo <strong>Nassera Nabgaoui</strong></p>
+        </footer>
 
     </section>
 
@@ -135,7 +137,7 @@
             document.getElementById('searchForm').classList.add('hidden');
             document.getElementById('proposeForm').classList.add('hidden');
             
-            
+            // Désactiver tous les boutons
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
 
             // Activer le bon
@@ -150,12 +152,9 @@
     </script>
     
     <script src="script.js"></script>
-    <footer>
-        <p>&copy; 2025 NexusGo <strong>Nassera Nabgaoui</strong></p>
-    </footer>
+
 </body>
 </html>
-
 
 
 
