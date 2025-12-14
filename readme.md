@@ -4,7 +4,7 @@
 
 NexusGo est une application web de covoiturage réalisée en **Full JavaScript** (Node.js/Express + MongoDB).
 
-## 🛠️ Installation
+## Installation
 
 ### 1. Préparation du Backend
 Ouvrez votre terminal dans le dossier `backend` et installez les dépendances :
