@@ -1,128 +1,209 @@
+const API_URL = "https://nexusgo.onrender.com";
+
+// Initialization
 window.onload = function() {
-    verifierConnexion();
+    checkAuth();
+    blockPastDates();
 };
 
-// Connexion
-const formulaireLogin = document.getElementById("loginForm");
+// Login
+const loginForm = document.getElementById("loginForm");
 
-if (formulaireLogin) {
-    formulaireLogin.addEventListener("submit", async function(event) {
+if (loginForm) {
+    loginForm.addEventListener("submit", async function(event) {
         event.preventDefault();
+        
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
 
-        const emailSaisi = document.getElementById("email").value;
-        const mdpSaisi = document.getElementById("password").value;
+        try {
+            const res = await fetch(API_URL + "/auth/login", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                // Backend expects: email, motDePasse
+                body: JSON.stringify({ email: email, motDePasse: password })
+            });
+            const data = await res.json();
 
-        const reponse = await fetch("http://localhost:3000/auth/login", {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: emailSaisi, motDePasse: mdpSaisi })
-        });
-
-        const donnees = await reponse.json();
-
-        if (reponse.ok) {
-            localStorage.setItem("token", donnees.token);
-            localStorage.setItem("prenom", donnees.user.prenom);
-            localStorage.setItem("email", donnees.user.email);
-            
-            alert("Connexion réussie");
-            verifierConnexion();
-        } else {
-            document.getElementById("loginError").textContent = donnees.message;
+            if (res.ok) {
+                localStorage.setItem("token", data.token);
+                localStorage.setItem("firstName", data.user.prenom);
+                localStorage.setItem("email", data.user.email);
+                
+                checkAuth();
+                alert("Login successful");
+            } else {
+                document.getElementById("loginError").textContent = data.message;
+            }
+        } catch (error) {
+            console.error(error);
         }
     });
 }
 
-// Vérification
-function verifierConnexion() {
+function checkAuth() {
     const token = localStorage.getItem("token");
-    const prenom = localStorage.getItem("prenom");
-
-    const vueLogin = document.getElementById("auth-view");
-    const vueApp = document.getElementById("app-view");
-    const zonePrenom = document.getElementById("userDisplay");
+    const firstName = localStorage.getItem("firstName");
+    
+    const authView = document.getElementById("auth-view");
+    const appView = document.getElementById("app-view");
+    const userDisplay = document.getElementById("userDisplay");
 
     if (token) {
-        vueLogin.classList.add("hidden");
-        vueApp.classList.remove("hidden");
-        zonePrenom.textContent = prenom;
+        if (authView) authView.classList.add("hidden");
+        if (appView) appView.classList.remove("hidden");
+        if (userDisplay) userDisplay.textContent = firstName;
     } else {
-        vueLogin.classList.remove("hidden");
-        vueApp.classList.add("hidden");
+        if (authView) authView.classList.remove("hidden");
+        if (appView) appView.classList.add("hidden");
     }
 }
 
-// Déconnexion
 function logout() {
     localStorage.clear();
     window.location.reload();
 }
 
-// Recherche
-const formulaireRecherche = document.getElementById("searchForm");
+// Search
+const searchForm = document.getElementById("searchForm");
 
-if (formulaireRecherche) {
-    formulaireRecherche.addEventListener("submit", async function(event) {
+if (searchForm) {
+    searchForm.addEventListener("submit", async function(event) {
         event.preventDefault();
-
-        const villeDepart = document.getElementById("searchDepart").value;
-        const villeArrivee = document.getElementById("searchArrivee").value;
-
-        const url = "http://localhost:3000/rides?villeDepart=" + villeDepart + "&villeArrivee=" + villeArrivee;
         
-        const reponse = await fetch(url);
-        const listeTrajets = await reponse.json();
-
-        const zoneResultats = document.getElementById("resultsArea");
-        zoneResultats.innerHTML = "";
-
-        for (let trajet of listeTrajets) {
-            let div = document.createElement("div");
-            div.className = "result-item";
-
-            div.innerHTML = 
-                "<strong>" + trajet.villeDepart + " ➝ " + trajet.villeArrivee + "</strong><br>" +
-                "Prix : " + trajet.prix + " € <br>" +
-                "Places : " + trajet.nbPlaces;
-
-            let bouton = document.createElement("button");
-            bouton.textContent = "Réserver";
-            
-            bouton.addEventListener("click", function() {
-                reserverTrajet(trajet._id);
-            });
-
-            div.appendChild(bouton);
-            zoneResultats.appendChild(div);
+        const departure = document.getElementById("searchDepart").value;
+        const arrival = document.getElementById("searchArrivee").value;
+        const dateRaw = document.getElementById("searchDate").value;
+        
+        // Backend expects: villeDepart, villeArrivee
+        let url = API_URL + "/rides?villeDepart=" + departure + "&villeArrivee=" + arrival;
+        
+        if (dateRaw) {
+            const dateFormatted = formatDate(dateRaw);
+            url += "&date=" + dateFormatted;
         }
-        
-        if (listeTrajets.length === 0) {
-            zoneResultats.textContent = "Aucun trajet trouvé.";
+
+        try {
+            const res = await fetch(url);
+            const rides = await res.json();
+            const resultsArea = document.getElementById("resultsArea");
+            resultsArea.innerHTML = "";
+
+            if (rides.length === 0) {
+                resultsArea.innerHTML = "<p style='text-align:center; margin-top:20px;'>No rides found.</p>";
+            }
+
+            rides.forEach(ride => {
+                const div = document.createElement("div");
+                div.className = "result-item";
+                div.innerHTML = `
+                    <div>
+                        <strong>${ride.villeDepart} ➝ ${ride.villeArrivee}</strong><br>
+                        <small>Date: ${ride.date}</small>
+                    </div>
+                    <div style="text-align:right">
+                        <strong>${ride.prix} €</strong><br>
+                        <small>${ride.nbPlaces} seats</small>
+                    </div>
+                `;
+                
+                const btn = document.createElement("button");
+                btn.textContent = "Book";
+                btn.style.marginLeft = "15px";
+                btn.onclick = () => bookRide(ride._id);
+                
+                div.appendChild(btn);
+                resultsArea.appendChild(div);
+            });
+        } catch (error) {
+            console.error(error);
         }
     });
 }
 
-// Réservation
-async function reserverTrajet(idDuTrajet) {
-    const emailUser = localStorage.getItem("email");
+// Publish Ride
+const proposeForm = document.getElementById("proposeForm");
 
-    const reponse = await fetch("http://localhost:3000/bookings", {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-            idProposition: idDuTrajet, 
-            emailPassager: emailUser 
-        })
+if (proposeForm) {
+    proposeForm.addEventListener("submit", async function(event) {
+        event.preventDefault();
+        
+        const email = localStorage.getItem("email");
+        if (!email) return alert("Please login first.");
+
+        const departure = document.getElementById("proposeDepart").value;
+        const arrival = document.getElementById("proposeArrivee").value;
+        const dateRaw = document.getElementById("proposeDate").value;
+        const price = document.getElementById("proposePrix").value;
+        const seats = document.getElementById("proposePlaces").value;
+
+        const dateFormatted = formatDate(dateRaw);
+
+        try {
+            const res = await fetch(API_URL + "/rides", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                // Backend expects French keys
+                body: JSON.stringify({
+                    emailConducteur: email,
+                    villeDepart: departure,
+                    villeArrivee: arrival,
+                    date: dateFormatted,
+                    prix: price,
+                    nbPlaces: seats
+                })
+            });
+
+            if (res.ok) {
+                alert("Ride published successfully!");
+                proposeForm.reset();
+            } else {
+                alert("Error publishing ride.");
+            }
+        } catch (error) {
+            console.error(error);
+        }
     });
+}
 
-    const resultat = await reponse.json();
+// Booking
+async function bookRide(rideId) {
+    const email = localStorage.getItem("email");
+    if (!email) return alert("Please login first.");
 
-    if (reponse.ok) {
-        alert("Réservation réussie !");
-    } else {
-        alert("Erreur : " + resultat.message);
+    try {
+        const res = await fetch(API_URL + "/bookings", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            // Backend expects: idProposition, emailPassager
+            body: JSON.stringify({ idProposition: rideId, emailPassager: email })
+        });
+        const data = await res.json();
+        
+        if (res.ok) {
+            alert("Booking confirmed!");
+        } else {
+            alert("Error: " + data.message);
+        }
+    } catch (error) {
+        console.error(error);
     }
 }
 
+// Date Utilities
+function blockPastDates() {
+    const today = new Date().toISOString().split('T')[0];
+    const inputs = document.querySelectorAll('input[type="date"]');
+    inputs.forEach(input => {
+        input.setAttribute('min', today);
+    });
+}
+
+function formatDate(dateString) {
+    if (!dateString) return null;
+    const [year, month, day] = dateString.split("-");
+    // Converts 2025-12-30 to 251230
+    return parseInt(year.substring(2) + month + day); 
+}
 
 

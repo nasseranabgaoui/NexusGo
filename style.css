@@ -1,195 +1,171 @@
-/* -------- RESET -------- */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Inter", sans-serif;
+/* RESET */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+/* COULEURS KOMBO */
+:root {
+    --primary-blue: #007bff; /* Bleu Kombo */
+    --light-blue: #e8f2ff;
+    --yellow: #FFD600;      /* Jaune bouton */
+    --yellow-hover: #e5c100;
+    --text-dark: #1a1a1a;
+    --grey-input: #f0f2f5;
 }
 
 body {
-    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    background: linear-gradient(135deg, #2E94E8 0%, #007bff 100%);
     min-height: 100vh;
-    color: #333;
-    overflow-x: hidden;
+    color: var(--text-dark);
 }
 
-/* -------- VIEWS -------- */
-.view {
-    display: block;
-}
+/* UTILITAIRES */
+.hidden { display: none !important; }
+.view { width: 100%; min-height: 100vh; }
 
-.hidden {
-    display: none !important;
-}
+/* TEXTES */
+.logo-text { font-size: 32px; font-weight: 800; color: white; margin-bottom: 10px; }
+.logo-text.blue { color: var(--primary-blue); }
+.subtitle { color: rgba(255,255,255,0.9); font-size: 18px; margin-bottom: 30px; }
 
-/* -------- LOGIN -------- */
-.login-container {
-    text-align: center;
-    margin-top: 100px;
-    color: white;
-}
-
-.login-container h1 {
-    font-size: 50px;
-    font-weight: 800;
-}
-
-.subtitle {
-    margin-top: 10px;
-    font-size: 18px;
-    opacity: 0.9;
-}
-
-.login-card {
-    background: white;
-    padding: 30px;
-    width: 350px;
-    margin: 30px auto;
-    border-radius: 20px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.2);
-}
-
-.login-card input {
-    width: 100%;
-    padding: 12px;
-    border-radius: 12px;
-    border: 1px solid #ccc;
-    margin-bottom: 15px;
-}
-
-.login-card button {
-    width: 100%;
-    padding: 14px;
-    background: #4CAF50;
+/* BOUTONS */
+.btn-yellow {
+    background: var(--yellow);
+    color: var(--text-dark);
+    font-weight: 700;
     border: none;
-    border-radius: 12px;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.login-card button:hover {
-    background: #3e943f;
-    transform: scale(1.03);
-}
-
-/* -------- NAV -------- */
-nav {
-    display: flex;
-    justify-content: space-between;
-    padding: 25px 40px;
-    align-items: center;
-}
-
-.logo {
-    color: white;
-    font-size: 38px;
-    font-weight: 800;
-}
-
-.user-info {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    background: white;
-    padding: 10px 18px;
-    border-radius: 50px;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
-}
-
-.user-info img {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-}
-
-.btn-logout {
-    background: #E74C3C;
-    color: white;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.btn-logout:hover {
-    background: #c0392b;
-    transform: scale(1.05);
-}
-
-/* -------- HERO -------- */
-.hero {
-    margin-left: 40px;
-    margin-top: 40px;
-    color: white;
-}
-
-.hero h1 {
-    font-size: 48px;
-    font-weight: 800;
-}
-
-.hero p {
-    font-size: 20px;
-    opacity: 0.9;
-    margin-bottom: 40px;
-}
-
-/* -------- SEARCH CARD -------- */
-.search-card {
-    width: 500px;
-    background: #ffffff;
-    padding: 30px;
-    border-radius: 25px;
-    box-shadow: 0 12px 25px rgba(0,0,0,0.25);
-}
-
-.search-card input {
-    width: 100%;
-    padding: 14px;
-    margin-bottom: 12px;
-    border-radius: 12px;
-    border: 1px solid #ddd;
-}
-
-.search-card button {
-    width: 100%;
-    padding: 14px;
-    border-radius: 12px;
-    background: #4CAF50;
-    border: none;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 17px;
-    transition: 0.2s;
-}
-
-.search-card button:hover {
-    background: #3d8f41;
-    transform: scale(1.02);
-}
-
-/* -------- RESULTS -------- */
-.result-item {
-    background: #F7F7F7;
     padding: 15px;
     border-radius: 12px;
-    margin: 15px auto;
-    width: 500px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.2s;
+    width: 100%;
+}
+.btn-yellow:hover { transform: scale(1.02); background: var(--yellow-hover); }
+
+.btn-outline {
+    border: 2px solid var(--primary-blue);
+    background: transparent;
+    color: var(--primary-blue);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.btn-outline:hover { background: var(--light-blue); }
+
+/* INPUTS */
+.input-group {
+    background: var(--grey-input);
+    border-radius: 12px;
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    border: 1px solid transparent;
+}
+.input-group:focus-within { border-color: var(--primary-blue); background: white; }
+.input-group i { color: #888; margin-right: 12px; font-size: 18px; }
+.input-group input {
+    border: none;
+    background: transparent;
+    width: 100%;
+    outline: none;
+    font-size: 16px;
+    color: var(--text-dark);
+}
+
+/* LOGIN VIEW */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+}
+.card {
+    background: white;
+    padding: 40px;
+    border-radius: 24px;
+    width: 400px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+/* APP VIEW - NAV */
+nav {
+    background: white;
+    padding: 15px 50px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+.user-actions { display: flex; align-items: center; gap: 20px; font-weight: 500; }
+
+/* HERO SECTION (LAYOUT) */
+.hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 10%;
+    gap: 80px;
 }
 
-.result-item:hover {
-    background: #e8f5e9;
-    transform: scale(1.02);
+/* CARTE PRINCIPALE (GAUCHE) */
+.main-card {
+    background: white;
+    width: 450px;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+/* ONGLETS */
+.tabs { display: flex; margin-bottom: 20px; border-bottom: 2px solid #eee; }
+.tab-btn {
+    flex: 1;
+    background: none;
+    border: none;
+    padding-bottom: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #888;
+    cursor: pointer;
+}
+.tab-btn.active {
+    color: var(--primary-blue);
+    border-bottom: 3px solid var(--primary-blue);
+}
+.two-cols { display: flex; gap: 10px; }
+
+/* TEXTE HERO (DROITE) */
+.hero-text { color: white; max-width: 500px; }
+.hero-text h1 { font-size: 48px; font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
+.stars { font-size: 18px; font-weight: 500; }
+
+/* RESULTATS */
+.results-container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+.result-item {
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     transition: 0.2s;
 }
-
+.result-item:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+.result-item button {
+    background: var(--primary-blue);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.result-item button:hover { background: #0056b3; }
 
 
 

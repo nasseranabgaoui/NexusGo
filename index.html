@@ -4,64 +4,136 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NexusGo - Covoiturage</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- LOGIN VIEW -->
     <section id="auth-view" class="view">
         <div class="login-container">
-            <h1>NexusGo</h1>
-            <p class="subtitle">Connectez-vous pour continuer</p>
+            <h1 class="logo-text">NexusGo.</h1>
+            <p class="subtitle">Réservez et comparez tous les covoiturages</p>
 
             <div class="card login-card">
                 <form id="loginForm">
-                    <input type="email" id="email" placeholder="Email" required>
-                    <input type="password" id="password" placeholder="Mot de passe" required>
-                    <button type="submit">Connexion</button>
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" placeholder="Email" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="Mot de passe" required>
+                    </div>
+                    <button type="submit" class="btn-yellow">Connexion</button>
+                    <p id="loginError" class="error"></p>
                 </form>
-                <p id="loginError" class="error"></p>
             </div>
         </div>
     </section>
 
-    <!-- APP VIEW -->
     <section id="app-view" class="view hidden">
 
-        <!-- NAV -->
         <nav>
-            <div class="logo">NexusGo</div>
-            <div class="user-info">
-                <img id="userAvatar" src="https://i.imgur.com/jQY8F5F.png" alt="avatar">
-                <span id="userDisplay">Utilisateur</span>
-                <button onclick="logout()" class="btn-logout">Déconnexion</button>
+            <div class="logo-text blue">NexusGo.</div>
+            <div class="user-actions">
+                <span id="userDisplay"><i class="fas fa-user-circle"></i> Utilisateur</span>
+                <button onclick="logout()" class="btn-outline">Déconnexion</button>
             </div>
         </nav>
 
-        <!-- HERO SECTION -->
-        <div class="hero">
-            <h1>NexusGo</h1>
-            <p>Réservez et trouvez vos covoiturages facilement</p>
+        <div class="hero-section">
+            
+            <div class="main-card">
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('search')">
+                        <i class="fas fa-search"></i> Rechercher
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('propose')">
+                        <i class="fas fa-car"></i> Publier
+                    </button>
+                </div>
 
-            <!-- WHITE SEARCH CARD -->
-            <div class="search-card">
-
-                <form id="searchForm">
-                    <input type="text" id="searchDepart" placeholder="Ville de départ">
-                    <input type="text" id="searchArrivee" placeholder="Ville d'arrivée">
-                    <input type="date" id="searchDate">
-                    <button type="submit">Rechercher</button>
+                <form id="searchForm" class="tab-content active">
+                    <div class="input-row">
+                        <div class="input-group">
+                            <i class="far fa-circle"></i>
+                            <input type="text" id="searchDepart" placeholder="Ville de départ">
+                        </div>
+                    </div>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <input type="text" id="searchArrivee" placeholder="Ville d'arrivée">
+                        </div>
+                    </div>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <i class="far fa-calendar-alt"></i>
+                            <input type="date" id="searchDate">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-yellow full-width">Rechercher</button>
                 </form>
 
+                <form id="proposeForm" class="tab-content hidden">
+                    <div class="input-group">
+                        <i class="far fa-circle"></i>
+                        <input type="text" id="proposeDepart" placeholder="Départ" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <input type="text" id="proposeArrivee" placeholder="Arrivée" required>
+                    </div>
+                    <div class="two-cols">
+                        <div class="input-group">
+                            <i class="far fa-calendar-alt"></i>
+                            <input type="date" id="proposeDate" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-euro-sign"></i>
+                            <input type="number" id="proposePrix" placeholder="Prix" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-users"></i>
+                        <input type="number" id="proposePlaces" placeholder="Places dispo" required>
+                    </div>
+                    <button type="submit" class="btn-yellow full-width">Publier le trajet</button>
+                </form>
             </div>
+
+            <div class="hero-text">
+                <h1>Réservez et comparez tous les covoiturages</h1>
+                <div class="stars">
+                    ⭐⭐⭐⭐⭐ <span>+1 000 000 voyageurs</span>
+                </div>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" alt="Logos" style="height: 30px; margin-top: 20px; opacity: 0.7;">
+            </div>
+
         </div>
 
-        <!-- RESULTS -->
-        <div id="resultsArea"></div>
+        <div id="resultsArea" class="results-container"></div>
 
     </section>
 
     <script src="script.js"></script>
+    <script>
+        // Petit script juste pour gérer les onglets visuellement
+        function switchTab(tab) {
+            // Cacher tous les contenus
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+            // Montrer le bon
+            if(tab === 'search') {
+                document.getElementById('searchForm').classList.remove('hidden');
+                document.querySelectorAll('.tab-btn')[0].classList.add('active');
+            } else {
+                document.getElementById('proposeForm').classList.remove('hidden');
+                document.querySelectorAll('.tab-btn')[1].classList.add('active');
+            }
+        }
+    </script>
 </body>
 </html>
 
