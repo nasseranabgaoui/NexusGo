@@ -1,10 +1,8 @@
 var bcrypt = require("bcrypt");
-// CORRECTION ICI : On pointe vers le vrai modèle User, pas vers ce fichier lui-même
 var User = require("../models/User"); 
 
 // LOGIN
 exports.login = async (req, res) => {
-    // Utilisation de var comme à la page 23 du cours pour la partie serveur
     var email = req.body.email;
     var motDePasse = req.body.motDePasse;
 

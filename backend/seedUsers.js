@@ -26,7 +26,7 @@ const users = [
   },
   {
     email: "legolas@aimbot.com",
-    motDePasse: "NeverMiss",
+    motDePasse: "1234",
     nom: "Greenleaf",
     prenom: "Legolas",
     telephone: "0603030303"

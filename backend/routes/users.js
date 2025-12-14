@@ -2,10 +2,9 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 
-// 1. Récupérer tous les utilisateurs (GET /users)
+// 1. Récupérer tous les utilisateurs 
 router.get("/", async (req, res) => {
     try {
-        // On récupère tout le monde SAUF le champ mot de passe (sécurité)
         const users = await User.find().select("-motDePasse");
         res.json(users);
     } catch (err) {
@@ -13,7 +12,7 @@ router.get("/", async (req, res) => {
     }
 });
 
-// 2. Récupérer un seul utilisateur par son ID (GET /users/:id)
+// 2. Récupérer un seul utilisateur par son ID 
 router.get("/:id", async (req, res) => {
     try {
         const user = await User.findById(req.params.id).select("-motDePasse");
@@ -24,7 +23,7 @@ router.get("/:id", async (req, res) => {
     }
 });
 
-// 3. Supprimer un utilisateur (DELETE /users/:id)
+// 3. Supprimer un utilisateur 
 router.delete("/:id", async (req, res) => {
     try {
         await User.findByIdAndDelete(req.params.id);

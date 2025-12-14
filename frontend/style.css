@@ -1,4 +1,4 @@
-/* RESET & CONFIGURATION GLOBALE*/
+/* Configuration globale */
 * {
     margin: 0;
     padding: 0;
@@ -21,13 +21,13 @@ body {
     background: linear-gradient(135deg, #3b9eff 0%, #007bff 100%);
     min-height: 100vh;
     color: var(--text-color);
-    overflow-x: hidden; /* Évite le scroll horizontal */
+    overflow-x: hidden;
 }
 
 .hidden { display: none !important; }
 .full-width { width: 100%; }
 
-/* PAGE DE CONNEXION */
+/* Page de connexion */
 .login-wrapper {
     height: 100vh;
     display: flex;
@@ -61,7 +61,7 @@ body {
     font-weight: 700;
 }
 
-/* BARRE DE NAVIGATION  */
+/* Barre de navigation */
 nav {
     background: white;
     padding: 15px 5%;
@@ -91,7 +91,7 @@ nav {
     color: var(--text-color);
 }
 
-/* BOUTONS & CHAMPS DE SAISIE*/
+/* Boutons et champs */
 .btn-primary {
     background: var(--kombo-blue);
     color: white;
@@ -149,16 +149,22 @@ nav {
     transform: translateY(-50%);
     color: #888;
     font-size: 18px;
+    z-index: 10;
 }
 
 .input-with-icon input {
     width: 100%;
-    padding: 16px 16px 16px 45px;
+    height: 54px;
+    padding: 0 16px 0 45px;
     background: #f0f2f5;
     border: 1px solid transparent;
     border-radius: 12px;
     font-size: 15px;
     transition: 0.3s;
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+    min-width: 0;
 }
 
 .input-with-icon input:focus {
@@ -173,7 +179,7 @@ nav {
     gap: 10px;
 }
 
-/* SECTION PRINCIPALE  */
+/* Section principale */
 .hero-container {
     display: flex;
     align-items: center;
@@ -243,7 +249,7 @@ nav {
     display: inline-block;
 }
 
-/* SECTION PARTENAIRES*/
+/* Partenaires */
 .partners-section {
     margin-top: 40px;
     border-top: 1px solid rgba(255, 255, 255, 0.3);
@@ -282,7 +288,7 @@ nav {
     cursor: pointer;
 }
 
-/*RÉSULTATS DE RECHERCHE */
+/* Résultats */
 .results-container {
     max-width: 900px;
     margin: 0 auto;
@@ -313,7 +319,7 @@ nav {
     font-size: 0.9rem;
 }
 
-/* NOTIFICATIONS */
+/* Notifications */
 #toast-container {
     position: fixed;
     top: 30px;
@@ -354,9 +360,7 @@ nav {
     to { opacity: 0; transform: translateY(-20px); }
 }
 
-/* 9. RESPONSIVE (MOBILE & TABLETTE) */
-
-/* Tablettes et petits ordis */
+/* Responsive */
 @media (max-width: 1200px) {
     .hero-container {
         flex-direction: column-reverse;
@@ -368,7 +372,6 @@ nav {
     .logos-grid { justify-content: center; }
 }
 
-/* Mobiles */
 @media (max-width: 600px) {
     nav {
         padding: 15px 15px;
@@ -384,7 +387,6 @@ nav {
         overflow: hidden; 
     }
     
-    
     .row { 
         flex-direction: column; 
         gap: 0; 
@@ -396,10 +398,9 @@ nav {
         max-width: 100%; 
     }
 
-    
     .input-with-icon input {
         width: 100%;
-        min-width: 0; 
+        height: 50px;
         font-size: 14px; 
         padding-right: 10px;
     }
