@@ -6,16 +6,12 @@
     font-family: 'Inter', sans-serif;
 }
 
-/* Couleurs */
 :root {
     --kombo-blue: #007bff;
-    --kombo-dark-blue: #0056b3;
     --kombo-yellow: #fcd600;
-    --kombo-yellow-hover: #e5c100;
     --text-color: #333;
 }
 
-/* Corps de la page */
 body {
     background: linear-gradient(135deg, #3b9eff 0%, #007bff 100%);
     min-height: 100vh;
@@ -39,7 +35,6 @@ nav {
     z-index: 100;
 }
 
-/* Logo */
 .logo {
     font-weight: 800;
     font-size: 22px;
@@ -49,7 +44,6 @@ nav {
 
 .user-menu { display: flex; align-items: center; gap: 10px; }
 
-/* Boutons navigation */
 .btn-outline {
     border: 2px solid var(--kombo-blue);
     background: transparent;
@@ -60,7 +54,7 @@ nav {
     cursor: pointer;
 }
 
-/* Conteneur principal (Mobile par défaut) */
+/* Section principale */
 .hero-container {
     display: flex;
     flex-direction: column-reverse;
@@ -70,7 +64,7 @@ nav {
     width: 100%;
 }
 
-/* Carte de recherche (Mobile) */
+/* Carte de recherche */
 .hero-card {
     background: white;
     padding: 20px;
@@ -102,7 +96,7 @@ nav {
     border-bottom-color: var(--kombo-blue);
 }
 
-/* Champs de saisie (Mobile) */
+/* Champs de saisie */
 .input-with-icon {
     position: relative;
     margin-bottom: 15px;
@@ -121,16 +115,18 @@ nav {
 
 .input-with-icon input {
     width: 100%;
-    height: 55px;
+    height: 55px !important;
+    min-height: 55px;
     padding: 0 15px 0 45px;
     background: #f0f2f5;
     border: 1px solid transparent;
     border-radius: 12px;
     font-size: 1rem;
     outline: none;
+    -webkit-appearance: none;
 }
 
-/* Bouton jaune */
+/* Bouton rechercher */
 .btn-yellow {
     background: var(--kombo-yellow);
     color: #1a1a1a;
@@ -144,7 +140,7 @@ nav {
     margin-top: 10px;
 }
 
-/* Texte principal (Mobile) */
+/* Texte d'accueil */
 .hero-text {
     color: white;
     text-align: center;
@@ -157,7 +153,6 @@ nav {
     margin-bottom: 20px;
 }
 
-/* Avis clients */
 .ratings {
     font-size: 1rem;
     background: rgba(255, 255, 255, 0.2);
@@ -170,7 +165,7 @@ nav {
 
 .stars { color: #ffd700; }
 
-/* Partenaires (Mobile) */
+/* Partenaires */
 .partners-section {
     margin-top: 30px;
     border-top: 1px solid rgba(255, 255, 255, 0.3);
@@ -200,65 +195,57 @@ footer {
     font-size: 0.9rem;
 }
 
-/* Version PC (Ecrans larges uniquement) */
+/* Version PC */
 @media (min-width: 1024px) {
     
-    /* Navigation PC */
-    nav { padding: 20px 50px; }
+    nav { padding: 25px 50px; }
     .logo { font-size: 30px; }
 
-    /* Disposition horizontale PC */
     .hero-container {
         flex-direction: row;
-        justify-content: center;
-        width: 95%;
-        max-width: 1600px;
+        justify-content: space-between;
+        width: 98%;
+        max-width: 1900px;
         margin: 0 auto;
-        padding: 4vh 2vw;
-        gap: 6rem;
+        padding: 2vh 4vw;
+        gap: 8rem;
     }
 
-    /* Carte géante PC */
     .hero-card {
-        padding: 4rem;
-        border-radius: 35px;
-        flex: 1;
-        min-width: 600px;
-        box-shadow: 0 40px 80px rgba(0,0,0,0.3);
+        padding: 5rem;
+        border-radius: 40px;
+        flex: 1.2;
+        min-width: 650px;
+        box-shadow: 0 50px 100px rgba(0,0,0,0.25);
     }
 
-    /* Onglets PC */
     .tab-btn {
-        padding: 20px;
-        font-size: 1.4rem;
+        padding: 25px;
+        font-size: 1.5rem;
         border-bottom-width: 5px;
     }
 
-    /* Champs géants PC */
-    .input-with-icon { margin-bottom: 25px; }
+    .input-with-icon { margin-bottom: 30px; }
     
     .input-with-icon input {
-        height: 85px;
-        padding: 0 30px 0 75px;
-        font-size: 1.3rem;
-        border-radius: 18px;
-        border-width: 2px;
+        height: 95px !important;
+        padding: 0 30px 0 80px;
+        font-size: 1.4rem;
+        border-radius: 20px;
     }
 
     .input-with-icon i {
-        font-size: 28px;
-        left: 25px;
+        font-size: 32px;
+        left: 30px;
     }
 
-    /* Bouton géant PC */
     .btn-yellow {
-        padding: 25px;
-        font-size: 1.6rem;
-        border-radius: 18px;
-        margin-top: 20px;
+        padding: 30px;
+        font-size: 1.8rem;
+        border-radius: 20px;
+        margin-top: 25px;
     }
 
-    /* Texte géant PC */
     .hero-text {
         text-align: left;
         flex: 1;
@@ -266,19 +253,19 @@ footer {
     }
 
     .hero-text h1 {
-        font-size: 5rem;
-        margin-bottom: 40px;
+        font-size: 6rem;
+        margin-bottom: 50px;
     }
 
     .ratings {
-        font-size: 1.4rem;
-        padding: 15px 30px;
+        font-size: 1.5rem;
+        padding: 15px 35px;
     }
 
-    /* Partenaires géants PC */
-    .partners-section p { font-size: 1.2rem; }
-    .logos-grid { justify-content: flex-start; gap: 20px; }
-    .partner-logo { height: 60px; padding: 10px 15px; border-radius: 12px; }
+    .partners-section { margin-top: 60px; }
+    .partners-section p { font-size: 1.3rem; }
+    .logos-grid { justify-content: flex-start; gap: 25px; }
+    .partner-logo { height: 70px; padding: 12px 20px; border-radius: 15px; }
 }
 
 
