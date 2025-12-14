@@ -1,15 +1,12 @@
 const API_URL = "https://nexusgo.onrender.com";
 
-// On attend que TOUT le HTML soit chargé avant de lancer les scripts
 document.addEventListener("DOMContentLoaded", function() {
     
-    // 1. On bloque les dates passées IMMÉDIATEMENT
+    // 1. Initialisation
     blockPastDates();
-    
-    // 2. On vérifie si l'utilisateur est connecté
     checkAuth();
 
-    // 3. Gestion de la Connexion
+    // 2. Connexion
     const loginForm = document.getElementById("loginForm");
     if (loginForm) {
         loginForm.addEventListener("submit", async function(event) {
@@ -30,17 +27,19 @@ document.addEventListener("DOMContentLoaded", function() {
                     localStorage.setItem("firstName", data.user.prenom);
                     localStorage.setItem("email", data.user.email);
                     checkAuth();
-                    alert("Connexion réussie");
+                    showNotification("Connexion réussie !", "success"); // <-- Nouveau !
                 } else {
                     document.getElementById("loginError").textContent = data.message;
+                    showNotification(data.message, "error"); // <-- Nouveau !
                 }
             } catch (error) {
                 console.error(error);
+                showNotification("Erreur de connexion serveur", "error");
             }
         });
     }
 
-    // 4. Gestion de la Recherche
+    // 3. Recherche
     const searchForm = document.getElementById("searchForm");
     if (searchForm) {
         searchForm.addEventListener("submit", async function(event) {
@@ -61,7 +60,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 resultsArea.innerHTML = "";
 
                 if (rides.length === 0) {
-                    resultsArea.innerHTML = "<p style='text-align:center; margin-top:20px;'>Aucun trajet trouvé.</p>";
+                    resultsArea.innerHTML = "<p style='text-align:center; margin-top:20px; color:#666'>Aucun trajet trouvé.</p>";
+                    showNotification("Aucun trajet trouvé pour cette recherche", "error");
+                } else {
+                    showNotification(rides.length + " trajet(s) trouvé(s)", "success");
                 }
 
                 rides.forEach(ride => {
@@ -70,11 +72,13 @@ document.addEventListener("DOMContentLoaded", function() {
                     div.innerHTML = `
                         <div>
                             <strong>${ride.villeDepart} ➝ ${ride.villeArrivee}</strong><br>
-                            <small>Date: ${ride.date}</small>
+                            <small style="color:#777"><i class="fa-regular fa-calendar"></i> ${ride.date}</small>
                         </div>
                         <div style="text-align:right">
-                            <strong>${ride.prix} €</strong><br>
-                            <small>${ride.nbPlaces} places</small>
+                            <strong style="font-size:18px; color:#007bff">${ride.prix} €</strong><br>
+                            <small style="color:${ride.nbPlaces > 0 ? '#2ecc71' : 'red'}">
+                                ${ride.nbPlaces} place(s)
+                            </small>
                         </div>
                     `;
                     const btn = document.createElement("button");
@@ -84,17 +88,22 @@ document.addEventListener("DOMContentLoaded", function() {
                     div.appendChild(btn);
                     resultsArea.appendChild(div);
                 });
-            } catch (error) { console.error(error); }
+            } catch (error) { 
+                console.error(error); 
+            }
         });
     }
 
-    // 5. Gestion de la Proposition
+    // 4. Proposition de trajet
     const proposeForm = document.getElementById("proposeForm");
     if (proposeForm) {
         proposeForm.addEventListener("submit", async function(event) {
             event.preventDefault();
             const email = localStorage.getItem("email");
-            if (!email) return alert("Veuillez vous connecter.");
+            
+            if (!email) {
+                return showNotification("Veuillez vous connecter pour publier.", "error");
+            }
 
             const departure = document.getElementById("proposeDepart").value;
             const arrival = document.getElementById("proposeArrivee").value;
@@ -117,10 +126,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
 
                 if (res.ok) {
-                    alert("Trajet publié !");
+                    showNotification("Trajet publié avec succès !", "success"); // <-- Plus pro !
                     proposeForm.reset();
                 } else {
-                    alert("Erreur lors de la publication.");
+                    showNotification("Erreur lors de la publication.", "error");
                 }
             } catch (error) { console.error(error); }
         });
@@ -128,6 +137,36 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 /* --- FONCTIONS UTILITAIRES --- */
+
+// Nouvelle fonction pour afficher les notifications "PRO"
+function showNotification(message, type = 'success') {
+    // Créer le conteneur si il n'existe pas
+    let container = document.getElementById('toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        document.body.appendChild(container);
+    }
+
+    // Créer la notification
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    
+    // Icône selon le type
+    const icon = type === 'success' ? '<i class="fa-solid fa-circle-check"></i>' : '<i class="fa-solid fa-circle-exclamation"></i>';
+    
+    toast.innerHTML = `${icon} <span>${message}</span>`;
+    
+    container.appendChild(toast);
+
+    // Supprimer après 3 secondes
+    setTimeout(() => {
+        toast.style.animation = 'fadeOut 0.5s forwards';
+        setTimeout(() => {
+            toast.remove();
+        }, 500);
+    }, 3000);
+}
 
 function checkAuth() {
     const token = localStorage.getItem("token");
@@ -153,7 +192,7 @@ function logout() {
 
 function bookRide(rideId) {
     const email = localStorage.getItem("email");
-    if (!email) return alert("Veuillez vous connecter.");
+    if (!email) return showNotification("Connectez-vous pour réserver.", "error");
     
     fetch(API_URL + "/bookings", {
         method: 'POST',
@@ -161,11 +200,18 @@ function bookRide(rideId) {
         body: JSON.stringify({ idProposition: rideId, emailPassager: email })
     })
     .then(res => res.json())
-    .then(data => alert(data.message || "Réservation réussie"))
+    .then(data => {
+        if(data.message && data.message.includes("confirmée")) {
+             showNotification(data.message, "success");
+             
+             document.getElementById("searchForm").dispatchEvent(new Event('submit'));
+        } else {
+             showNotification(data.message || "Erreur réservation", "error");
+        }
+    })
     .catch(err => console.error(err));
 }
 
-// C'est cette fonction qui empêche de cliquer sur hier
 function blockPastDates() {
     const today = new Date().toISOString().split('T')[0];
     const inputs = document.querySelectorAll('input[type="date"]');

@@ -185,6 +185,45 @@ nav {
     .result-item { flex-direction: column; align-items: flex-start; gap: 15px; }
     .result-item div:last-child { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px; }
 }
+#toast-container {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    background: white;
+    color: #333;
+    padding: 16px 30px;
+    border-radius: 50px; /* Forme de pilule moderne */
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2); /* Belle ombre */
+    font-weight: 600;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: slideInDown 0.4s ease-out forwards;
+    min-width: 300px;
+    justify-content: center;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.toast.success i { color: #2ecc71; font-size: 18px; } /* Vert pour succès */
+.toast.error i { color: #e74c3c; font-size: 18px; }   /* Rouge pour erreur */
+
+@keyframes slideInDown {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeOut {
+    to { opacity: 0; transform: translateY(-20px); }
+}
 
 
 
