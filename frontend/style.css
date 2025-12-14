@@ -6,6 +6,7 @@
     font-family: 'Inter', sans-serif;
 }
 
+/* Variables de couleurs */
 :root {
     --kombo-blue: #007bff;
     --kombo-yellow: #fcd600;
@@ -150,7 +151,7 @@ nav {
     z-index: 10;
 }
 
-/* Hauteur standard pour mobile et tablette (correction du champ date) */
+/* Hauteur standard (Mobile et Tablette) */
 .input-with-icon input {
     width: 100%;
     height: 55px !important;
@@ -225,6 +226,28 @@ nav {
     border-radius: 6px;
 }
 
+/* Conteneur des résultats */
+.results-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px 50px 20px;
+    width: 100%;
+}
+
+/* Carte d'un résultat (fond blanc corrigé) */
+.result-item {
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: 0.2s;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
 /* Pied de page */
 footer {
     text-align: center;
@@ -275,16 +298,16 @@ footer {
         justify-content: space-between;
         width: 98%;
         max-width: 1900px;
-        /* RÉDUCTION DU MARGE/PADDING VERTICAL POUR REMPLIR PLUS LA HAUTEUR */
+        margin: 0 auto;
         padding: 4vh 4vw;
-        gap: 6rem; /* Légère réduction de l'écartement */
+        gap: 6rem;
     }
 
     .hero-card {
-        padding: 4rem; /* Légère réduction interne */
+        padding: 4rem;
         border-radius: 40px;
         flex: 1.2;
-        min-width: 600px; /* Légère réduction min-width */
+        min-width: 600px;
         box-shadow: 0 50px 100px rgba(0,0,0,0.25);
     }
 
@@ -292,48 +315,3 @@ footer {
         padding: 25px;
         font-size: 1.5rem;
         border-bottom-width: 5px;
-    }
-
-    .input-with-icon { margin-bottom: 25px; }
-    
-    .input-with-icon input {
-        /* Hauteur XXL maintenue */
-        height: 95px !important;
-        padding: 0 30px 0 80px;
-        font-size: 1.4rem;
-        border-radius: 20px;
-    }
-
-    .input-with-icon i {
-        font-size: 32px;
-        left: 30px;
-    }
-
-    .btn-yellow {
-        padding: 25px; /* Légère réduction du padding du bouton */
-        font-size: 1.6rem; /* Légère réduction du texte */
-        border-radius: 20px;
-        margin-top: 20px;
-    }
-
-    .hero-text {
-        text-align: left;
-        flex: 1;
-        padding-left: 20px;
-    }
-
-    .hero-text h1 {
-        font-size: 5rem; /* Réduction du titre pour mieux centrer verticalement */
-        margin-bottom: 40px;
-    }
-
-    .ratings {
-        font-size: 1.6rem; /* Agrandissement du badge d'avis */
-        padding: 18px 35px;
-    }
-
-    .partners-section { margin-top: 40px; }
-    .partners-section p { font-size: 1.2rem; }
-    .logos-grid { justify-content: flex-start; gap: 20px; }
-    .partner-logo { height: 60px; padding: 10px 15px; border-radius: 12px; }
-}
