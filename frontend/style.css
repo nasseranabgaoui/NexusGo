@@ -115,6 +115,7 @@ nav {
 
 .input-with-icon input {
     width: 100%;
+    /* Hauteur unique pour Mobile/Tablette/Date */
     height: 55px !important;
     min-height: 55px;
     padding: 0 15px 0 45px;
@@ -195,6 +196,38 @@ footer {
     font-size: 0.9rem;
 }
 
+
+/* Version Tablette (Séparée du PC pour les marges) */
+@media (min-width: 601px) and (max-width: 1023px) {
+    .hero-container {
+        /* Limite la largeur pour laisser des marges sur les côtés */
+        max-width: 700px;
+        width: 90%;
+        margin: 40px auto;
+        padding: 30px;
+        gap: 40px;
+    }
+    
+    .hero-card {
+        /* Assure que la carte est centrée dans le conteneur */
+        max-width: 480px;
+        margin: 0 auto;
+    }
+    
+    .hero-text h1 {
+        font-size: 3rem;
+    }
+    
+    .partners-section {
+        text-align: center;
+    }
+    
+    .logos-grid {
+        justify-content: center;
+    }
+}
+
+
 /* Version PC */
 @media (min-width: 1024px) {
     
@@ -228,6 +261,7 @@ footer {
     .input-with-icon { margin-bottom: 30px; }
     
     .input-with-icon input {
+        /* Hauteur XXL pour PC (doit rester ici) */
         height: 95px !important;
         padding: 0 30px 0 80px;
         font-size: 1.4rem;
@@ -266,26 +300,6 @@ footer {
     .partners-section p { font-size: 1.3rem; }
     .logos-grid { justify-content: flex-start; gap: 25px; }
     .partner-logo { height: 70px; padding: 12px 20px; border-radius: 15px; }
-
-    @media (min-width: 601px) and (max-width: 1023px) {
-    .hero-container {
-        /* On limite la largeur pour que ça ne colle pas aux bords */
-        max-width: 80%; 
-        /* On centre le bloc */
-        margin: 40px auto; 
-        /* On garde un peu de padding interne */
-        padding: 30px;
-        /* On s'assure que la carte ne soit pas trop large non plus */
-    }
-    
-    .hero-card {
-        /* Une largeur max pour la carte elle-même */
-        max-width: 500px;
-        /* Centrer la carte dans le conteneur */
-        margin: 0 auto;
-    }
-}
-
 }
 
 
