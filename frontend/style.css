@@ -1,4 +1,4 @@
-/* Réinitialisation globale des marges et de la police */
+/* Réinitialisation globale */
 * {
     margin: 0;
     padding: 0;
@@ -6,7 +6,7 @@
     font-family: 'Inter', sans-serif;
 }
 
-/* Variables de couleurs utilisées sur tout le site */
+/* Variables de couleurs */
 :root {
     --kombo-blue: #007bff;
     --kombo-dark-blue: #0056b3;
@@ -17,7 +17,7 @@
     --text-white: #ffffff;
 }
 
-/* Fond bleu dégradé et configuration de la hauteur de page */
+/* Configuration du corps de page */
 body {
     background: linear-gradient(135deg, #3b9eff 0%, #007bff 100%);
     min-height: 100vh;
@@ -27,11 +27,11 @@ body {
     flex-direction: column;
 }
 
-/* Classes utilitaires pour cacher ou étendre des éléments */
+/* Classes utilitaires */
 .hidden { display: none !important; }
 .full-width { width: 100%; }
 
-/* Structure de la page de connexion centrée verticalement */
+/* Page de connexion */
 .login-wrapper {
     height: 100vh;
     display: flex;
@@ -41,7 +41,6 @@ body {
     padding: 20px;
 }
 
-/* Titre de la marque sur la page de connexion */
 .brand-title {
     color: white;
     font-size: 3rem;
@@ -50,7 +49,6 @@ body {
     text-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-/* Carte blanche du formulaire de connexion */
 .login-card {
     background: white;
     padding: 40px;
@@ -61,17 +59,16 @@ body {
     text-align: center;
 }
 
-/* Titre h2 dans la carte de connexion */
 .login-card h2 {
     margin-bottom: 25px;
     color: var(--kombo-blue);
     font-weight: 700;
 }
 
-/* Barre de navigation blanche fixée en haut */
+/* Barre de navigation */
 nav {
     background: white;
-    padding: 15px 5%;
+    padding: 15px 3%; 
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -81,28 +78,25 @@ nav {
     z-index: 100;
 }
 
-/* Logo texte dans la barre de navigation */
 .logo {
     font-weight: 800;
-    font-size: 24px;
+    font-size: 26px; 
     color: var(--kombo-blue);
     text-decoration: none;
 }
 
-/* Section utilisateur à droite du menu */
 .user-menu {
     display: flex;
     align-items: center;
     gap: 15px;
 }
 
-/* Nom de l'utilisateur affiché */
 #userDisplay {
     font-weight: 600;
     color: var(--text-color);
 }
 
-/* Bouton bleu standard */
+/* Boutons */
 .btn-primary {
     background: var(--kombo-blue);
     color: white;
@@ -114,125 +108,115 @@ nav {
     font-size: 16px;
 }
 
-/* Bouton jaune style Kombo pour les actions principales */
 .btn-yellow {
     background: var(--kombo-yellow);
     color: #1a1a1a;
     border: none;
-    padding: 15px;
+    padding: 20px; 
     border-radius: 12px;
-    font-weight: 700;
-    font-size: 16px;
+    font-weight: 800;
+    font-size: 1.2rem; 
     cursor: pointer;
     transition: transform 0.2s;
-    margin-top: 10px;
+    margin-top: 15px;
     width: 100%;
 }
 
-/* Effet de survol sur le bouton jaune */
 .btn-yellow:hover {
     background: var(--kombo-yellow-hover);
     transform: translateY(-2px);
 }
 
-/* Bouton avec bordure bleue simple */
 .btn-outline {
     border: 2px solid var(--kombo-blue);
     background: transparent;
     color: var(--kombo-blue);
-    padding: 6px 15px;
-    border-radius: 20px;
+    padding: 8px 20px;
+    border-radius: 25px;
     cursor: pointer;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 15px;
 }
 
-/* Effet de survol bouton bordure */
 .btn-outline:hover {
     background: var(--bg-light);
 }
 
-/* Conteneur pour les champs de saisie avec icônes */
+/* Champs de saisie */
 .input-with-icon {
     position: relative;
-    margin-bottom: 15px;
+    margin-bottom: 20px; 
     width: 100%;
 }
 
-/* Icône positionnée à l'intérieur du champ */
 .input-with-icon i {
     position: absolute;
-    left: 15px;
+    left: 20px;
     top: 50%;
     transform: translateY(-50%);
     color: #888;
-    font-size: 18px;
+    font-size: 20px; 
     z-index: 10;
 }
 
-/* Style des champs de texte agrandis */
 .input-with-icon input {
     width: 100%;
-    height: 54px;
-    padding: 0 16px 0 45px;
+    height: 65px; 
+    padding: 0 20px 0 55px;
     background: #f0f2f5;
     border: 1px solid transparent;
-    border-radius: 12px;
-    font-size: 15px;
+    border-radius: 14px;
+    font-size: 1.1rem; 
     transition: 0.3s;
     outline: none;
 }
 
-/* État focus des champs de texte */
 .input-with-icon input:focus {
     background: white;
     border-color: var(--kombo-blue);
     box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
 }
 
-/* Ligne flexible pour aligner des éléments */
 .row {
     display: flex;
-    gap: 10px;
+    gap: 15px;
     width: 100%;
 }
 
-/* Conteneur principal agrandi pour l'écran PC */
+/* --- SECTION PRINCIPALE XL --- */
 .hero-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 60px 20px;
-    gap: 6rem; /* Grand espace entre texte et carte */
-    max-width: 1300px;
+    padding: 4rem 2rem; 
+    gap: 6rem;
+    width: 95%; 
+    max-width: 1600px; 
     margin: 0 auto;
-    width: 100%;
 }
 
-/* Carte de recherche agrandie */
+/* Carte de recherche */
 .hero-card {
     background: white;
-    padding: 40px;
-    border-radius: 24px;
-    flex: 1; /* Prend la moitié de l'espace */
-    min-width: 450px; /* Largeur minimale garantie */
-    box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+    padding: 3.5rem; 
+    border-radius: 28px;
+    flex: 1;
+    min-width: 550px; 
+    box-shadow: 0 30px 70px rgba(0,0,0,0.25);
 }
 
-/* Onglets de navigation dans la carte de recherche */
 .tabs {
     display: flex;
     border-bottom: 2px solid #f0f0f0;
-    margin-bottom: 30px;
+    margin-bottom: 35px;
 }
 
-/* Boutons des onglets */
 .tab-btn {
     flex: 1;
     background: none;
     border: none;
-    padding: 15px;
-    font-size: 18px;
+    padding: 18px;
+    font-size: 1.2rem; 
     font-weight: 600;
     color: #888;
     cursor: pointer;
@@ -240,96 +224,89 @@ nav {
     transition: 0.3s;
 }
 
-/* Onglet actif */
 .tab-btn.active {
     color: var(--kombo-blue);
     border-bottom-color: var(--kombo-blue);
 }
 
-/* Icône dans les onglets */
 .tab-btn i {
-    margin-right: 8px;
+    margin-right: 10px;
 }
 
-/* Bloc de texte et titre à droite */
+/* Bloc Texte */
 .hero-text {
     color: white;
-    flex: 1; /* Prend l'autre moitié de l'espace */
+    flex: 1;
 }
 
-/* Titre principal très grand */
 .hero-text h1 {
-    font-size: 4rem;
+    font-size: 4.5rem; 
     line-height: 1.1;
     font-weight: 800;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
+    text-shadow: 0 2px 15px rgba(0,0,0,0.1);
 }
 
-/* Badge des avis clients */
 .ratings {
-    font-size: 1.2rem;
+    font-size: 1.4rem; 
     opacity: 0.95;
     font-weight: 500;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 12px 25px;
     border-radius: 50px;
     display: inline-block;
 }
 
-/* Section des logos partenaires sous le texte */
+/* Partenaires */
 .partners-section {
-    margin-top: 40px;
+    margin-top: 50px;
     border-top: 1px solid rgba(255, 255, 255, 0.3);
-    padding-top: 20px;
+    padding-top: 25px;
 }
 
-/* Texte "Nos partenaires" */
 .partners-section p {
-    font-size: 14px;
+    font-size: 1rem;
     opacity: 0.9;
     margin-bottom: 15px;
     font-weight: 600;
     color: white;
 }
 
-/* Grille flexible des logos */
 .logos-grid {
     display: flex;
-    gap: 15px;
+    gap: 20px;
     flex-wrap: wrap;
     align-items: center;
 }
 
-/* Images des logos partenaires */
 .partner-logo {
-    height: 45px;
+    height: 55px; 
     width: auto;
     background: white;
-    padding: 8px 12px;
-    border-radius: 8px;
+    padding: 10px 15px;
+    border-radius: 10px;
     object-fit: contain;
     transition: transform 0.2s ease;
 }
 
-/* Animation au survol des logos */
 .partner-logo:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
     cursor: pointer;
 }
 
-/* Conteneur des résultats de recherche */
+/* Résultats */
 .results-container {
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
-    padding: 0 20px 50px 20px;
+    padding: 0 20px 60px 20px;
+    width: 100%;
 }
 
-/* Carte individuelle d'un résultat */
 .result-item {
     background: white;
-    padding: 25px;
-    border-radius: 16px;
-    margin-bottom: 15px;
+    padding: 30px;
+    border-radius: 18px;
+    margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -338,20 +315,24 @@ nav {
     border: 1px solid rgba(0,0,0,0.05);
 }
 
-/* Animation au survol d'un résultat */
 .result-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    transform: translateY(-4px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
 }
 
-/* Message d'erreur rouge */
-.error-msg {
-    color: #dc3545;
-    margin-top: 10px;
-    font-size: 0.9rem;
+/* Footer centré */
+footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1rem;
+    margin-top: auto;
+    width: 100%;
 }
 
-/* Conteneur des notifications toast */
+/* Messages d'erreur et toasts */
+.error-msg { color: #dc3545; margin-top: 10px; font-size: 0.95rem; }
+
 #toast-container {
     position: fixed;
     top: 30px;
@@ -363,7 +344,6 @@ nav {
     gap: 10px;
 }
 
-/* Style de la notification toast */
 .toast {
     background: white;
     color: #333;
@@ -377,47 +357,44 @@ nav {
     animation: slideInDown 0.4s ease-out forwards;
 }
 
-/* Icônes succès et erreur dans le toast */
 .toast.success i { color: #2ecc71; }
 .toast.error i { color: #e74c3c; }
 
-/* Animations d'entrée et de sortie */
 @keyframes slideInDown { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-@keyframes fadeOut { to { opacity: 0; transform: translateY(-20px); } }
 
-/* Pied de page centré globalement */
-footer {
-    text-align: center;
-    padding: 30px 20px;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.9rem;
-    margin-top: auto;
-    width: 100%;
-}
+/* --- RESPONSIVE --- */
 
-/* Adaptation pour les écrans de taille moyenne */
-@media (max-width: 1200px) {
+/* Écrans moyens (PC portable classique) */
+@media (max-width: 1250px) {
     .hero-container {
-        flex-direction: column-reverse; /* Inverse l'ordre : recherche en haut */
+        flex-direction: column-reverse; 
         text-align: center;
         gap: 40px;
+        padding: 3rem 1.5rem;
     }
-    .hero-text h1 { font-size: 3rem; }
+    .hero-text h1 { font-size: 3.5rem; }
     .logos-grid { justify-content: center; }
-    .hero-card { min-width: 100%; }
+    .hero-card { min-width: 100%; width: 100%; padding: 2.5rem; }
 }
 
-/* Adaptation pour les téléphones mobiles */
+/* Mobiles */
 @media (max-width: 600px) {
     nav { padding: 15px 15px; }
-    .logo { font-size: 20px; }
+    .logo { font-size: 22px; }
     #userDisplay { display: none; }
-    .hero-card { padding: 20px 15px; }
+    
+    .hero-container { padding: 2rem 1rem; }
+    .hero-card { padding: 1.5rem; border-radius: 20px; }
+    
     .row { flex-direction: column; gap: 0; }
-    .hero-text h1 { font-size: 2rem; }
-    .partner-logo { height: 35px; }
-    .result-item { flex-direction: column; align-items: flex-start; gap: 15px; }
-    .result-item div:last-child { width: 100%; border-top: 1px solid #eee; padding-top: 10px; margin-top: 10px; }
+    .input-with-icon { margin-bottom: 15px; }
+    .input-with-icon input { height: 55px; font-size: 1rem; }
+    
+    .hero-text h1 { font-size: 2.2rem; }
+    .partner-logo { height: 40px; }
+    
+    .result-item { flex-direction: column; align-items: flex-start; gap: 15px; padding: 20px; }
+    .result-item div:last-child { width: 100%; border-top: 1px solid #eee; padding-top: 15px; margin-top: 5px; }
 }
 
 
