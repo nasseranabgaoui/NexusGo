@@ -1,6 +1,7 @@
 #  NexusGo Montez et go
 **Cours :** HAI726I Technologies Web  
-**Auteur :** Nassera Nabgaoui  
+**Auteur :** Nassera Nabgaoui
+**Professeur :** Pierre Pompidor
 
 NexusGo est une application web de covoiturage réalisée en **Full JavaScript** (Node.js/Express + MongoDB).
 
