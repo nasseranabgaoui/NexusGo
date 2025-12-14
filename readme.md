@@ -63,7 +63,7 @@ Allez dans le dossier `frontend` et ouvrez le fichier `index.html` (double-clic 
   * **Base de Données** : MongoDB, Mongoose.
   * **Frontend** : HTML5, CSS3, Vanilla JS.
 
-## 🌳 Structure du Projet
+## Structure du Projet
 
 Voici comment est organisé le code source de l'application :
 
