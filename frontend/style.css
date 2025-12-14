@@ -1,221 +1,423 @@
-/* Réinitialisation de base pour supprimer les marges par défaut */
+/* Réinitialisation globale des marges et de la police */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Inter', sans-serif;
 }
 
-/* Corps de la page avec fond bleu global */
+/* Variables de couleurs utilisées sur tout le site */
+:root {
+    --kombo-blue: #007bff;
+    --kombo-dark-blue: #0056b3;
+    --kombo-yellow: #fcd600;
+    --kombo-yellow-hover: #e5c100;
+    --bg-light: #f4f7f9;
+    --text-color: #333;
+    --text-white: #ffffff;
+}
+
+/* Fond bleu dégradé et configuration de la hauteur de page */
 body {
-    background-color: #1877f2; /* Bleu type Facebook/Kombo */
+    background: linear-gradient(135deg, #3b9eff 0%, #007bff 100%);
+    min-height: 100vh;
+    color: var(--text-color);
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
 }
 
-/* Barre de navigation en haut */
-header {
-    background-color: white;
-    padding: 1rem 3rem;
+/* Classes utilitaires pour cacher ou étendre des éléments */
+.hidden { display: none !important; }
+.full-width { width: 100%; }
+
+/* Structure de la page de connexion centrée verticalement */
+.login-wrapper {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Titre de la marque sur la page de connexion */
+.brand-title {
+    color: white;
+    font-size: 3rem;
+    margin-bottom: 20px;
+    font-weight: 800;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Carte blanche du formulaire de connexion */
+.login-card {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+/* Titre h2 dans la carte de connexion */
+.login-card h2 {
+    margin-bottom: 25px;
+    color: var(--kombo-blue);
+    font-weight: 700;
+}
+
+/* Barre de navigation blanche fixée en haut */
+nav {
+    background: white;
+    padding: 15px 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-/* Logo NexusGo dans le header */
+/* Logo texte dans la barre de navigation */
 .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #1877f2;
+    font-weight: 800;
+    font-size: 24px;
+    color: var(--kombo-blue);
     text-decoration: none;
 }
 
-/* Section utilisateur à droite du header */
-.user-nav {
+/* Section utilisateur à droite du menu */
+.user-menu {
     display: flex;
+    align-items: center;
     gap: 15px;
-    align-items: center;
 }
 
-/* Section principale qui contient tout le contenu central */
-.hero-section {
-    flex: 1; /* Pousse le footer vers le bas */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 3rem 1rem;
-    width: 100%;
+/* Nom de l'utilisateur affiché */
+#userDisplay {
+    font-weight: 600;
+    color: var(--text-color);
 }
 
-/* Conteneur large pour aligner la recherche et le texte côte à côte */
-.hero-container {
-    display: flex;
-    max-width: 1250px; /* Agrandissement style Kombo */
-    width: 100%;
-    gap: 5rem; /* Espace entre le bloc blanc et le texte */
-    align-items: center;
-}
-
-/* Carte blanche contenant le formulaire de recherche */
-.search-card {
-    background: white;
-    padding: 2.5rem;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    flex: 1; /* Prend une part égale de l'espace */
-    min-width: 450px;
-}
-
-/* Onglets Rechercher / Proposer */
-.tabs {
-    display: flex;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #eee;
-}
-
-/* Style des onglets actifs */
-.tab.active {
-    color: #1877f2;
-    border-bottom: 3px solid #1877f2;
-    padding-bottom: 10px;
-    font-weight: bold;
-    margin-right: 20px;
+/* Bouton bleu standard */
+.btn-primary {
+    background: var(--kombo-blue);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
     cursor: pointer;
+    font-size: 16px;
 }
 
-/* Champs de saisie du formulaire */
-.input-group {
-    margin-bottom: 15px;
-    position: relative;
-}
-
-/* Style des inputs agrandis */
-.input-group input {
-    width: 100%;
-    padding: 18px 15px 18px 45px; /* Plus d'espace interne */
-    border: 1px solid #e0e0e0;
+/* Bouton jaune style Kombo pour les actions principales */
+.btn-yellow {
+    background: var(--kombo-yellow);
+    color: #1a1a1a;
+    border: none;
+    padding: 15px;
     border-radius: 12px;
-    background-color: #f8f9fa;
-    font-size: 1rem;
-    outline: none;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    margin-top: 10px;
+    width: 100%;
 }
 
-/* Icônes à l'intérieur des champs */
-.input-icon {
+/* Effet de survol sur le bouton jaune */
+.btn-yellow:hover {
+    background: var(--kombo-yellow-hover);
+    transform: translateY(-2px);
+}
+
+/* Bouton avec bordure bleue simple */
+.btn-outline {
+    border: 2px solid var(--kombo-blue);
+    background: transparent;
+    color: var(--kombo-blue);
+    padding: 6px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* Effet de survol bouton bordure */
+.btn-outline:hover {
+    background: var(--bg-light);
+}
+
+/* Conteneur pour les champs de saisie avec icônes */
+.input-with-icon {
+    position: relative;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+/* Icône positionnée à l'intérieur du champ */
+.input-with-icon i {
     position: absolute;
     left: 15px;
     top: 50%;
     transform: translateY(-50%);
     color: #888;
+    font-size: 18px;
+    z-index: 10;
 }
 
-/* Gros bouton jaune de recherche */
-.search-btn {
+/* Style des champs de texte agrandis */
+.input-with-icon input {
     width: 100%;
-    background-color: #ffd700;
-    border: none;
-    padding: 18px;
+    height: 54px;
+    padding: 0 16px 0 45px;
+    background: #f0f2f5;
+    border: 1px solid transparent;
     border-radius: 12px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: background 0.2s;
+    font-size: 15px;
+    transition: 0.3s;
+    outline: none;
 }
 
-/* Effet au survol du bouton */
-.search-btn:hover {
-    background-color: #ffcc00;
+/* État focus des champs de texte */
+.input-with-icon input:focus {
+    background: white;
+    border-color: var(--kombo-blue);
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
 }
 
-/* Bloc de texte à droite avec le titre et les partenaires */
-.hero-content {
+/* Ligne flexible pour aligner des éléments */
+.row {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+/* Conteneur principal agrandi pour l'écran PC */
+.hero-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    gap: 6rem; /* Grand espace entre texte et carte */
+    max-width: 1300px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Carte de recherche agrandie */
+.hero-card {
+    background: white;
+    padding: 40px;
+    border-radius: 24px;
+    flex: 1; /* Prend la moitié de l'espace */
+    min-width: 450px; /* Largeur minimale garantie */
+    box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+}
+
+/* Onglets de navigation dans la carte de recherche */
+.tabs {
+    display: flex;
+    border-bottom: 2px solid #f0f0f0;
+    margin-bottom: 30px;
+}
+
+/* Boutons des onglets */
+.tab-btn {
     flex: 1;
+    background: none;
+    border: none;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #888;
+    cursor: pointer;
+    border-bottom: 4px solid transparent;
+    transition: 0.3s;
+}
+
+/* Onglet actif */
+.tab-btn.active {
+    color: var(--kombo-blue);
+    border-bottom-color: var(--kombo-blue);
+}
+
+/* Icône dans les onglets */
+.tab-btn i {
+    margin-right: 8px;
+}
+
+/* Bloc de texte et titre à droite */
+.hero-text {
+    color: white;
+    flex: 1; /* Prend l'autre moitié de l'espace */
+}
+
+/* Titre principal très grand */
+.hero-text h1 {
+    font-size: 4rem;
+    line-height: 1.1;
+    font-weight: 800;
+    margin-bottom: 25px;
+}
+
+/* Badge des avis clients */
+.ratings {
+    font-size: 1.2rem;
+    opacity: 0.95;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px 20px;
+    border-radius: 50px;
+    display: inline-block;
+}
+
+/* Section des logos partenaires sous le texte */
+.partners-section {
+    margin-top: 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    padding-top: 20px;
+}
+
+/* Texte "Nos partenaires" */
+.partners-section p {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 15px;
+    font-weight: 600;
     color: white;
 }
 
-/* Grand titre principal agrandi */
-.hero-content h1 {
-    font-size: 4rem; /* Très grand texte */
-    line-height: 1.1;
-    font-weight: 800;
-    margin-bottom: 1.5rem;
-}
-
-/* Bandeau des avis clients */
-.rating-badge {
-    background: rgba(255, 255, 255, 0.2);
-    display: inline-flex;
-    align-items: center;
-    padding: 10px 20px;
-    border-radius: 50px;
-    font-weight: 600;
-    margin-bottom: 3rem;
-    font-size: 1.1rem;
-}
-
-/* Étoiles jaunes */
-.stars {
-    color: #ffd700;
-    margin-right: 10px;
-    font-size: 1.3rem;
-}
-
-/* Section des logos partenaires */
-.partners-title {
-    font-size: 0.9rem;
-    margin-bottom: 15px;
-    opacity: 0.9;
-}
-
-/* Grille des logos partenaires */
-.partners-logos {
+/* Grille flexible des logos */
+.logos-grid {
     display: flex;
     gap: 15px;
     flex-wrap: wrap;
+    align-items: center;
 }
 
-/* Images des logos agrandies */
+/* Images des logos partenaires */
 .partner-logo {
-    height: 45px; /* Logos plus visibles */
+    height: 45px;
+    width: auto;
     background: white;
+    padding: 8px 12px;
     border-radius: 8px;
-    padding: 5px;
+    object-fit: contain;
+    transition: transform 0.2s ease;
 }
 
+/* Animation au survol des logos */
+.partner-logo:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
 
-/* Adaptation pour les écrans mobiles et tablettes */
-@media (max-width: 950px) {
+/* Conteneur des résultats de recherche */
+.results-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px 50px 20px;
+}
+
+/* Carte individuelle d'un résultat */
+.result-item {
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: 0.2s;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+/* Animation au survol d'un résultat */
+.result-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* Message d'erreur rouge */
+.error-msg {
+    color: #dc3545;
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+/* Conteneur des notifications toast */
+#toast-container {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Style de la notification toast */
+.toast {
+    background: white;
+    color: #333;
+    padding: 16px 30px;
+    border-radius: 50px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: slideInDown 0.4s ease-out forwards;
+}
+
+/* Icônes succès et erreur dans le toast */
+.toast.success i { color: #2ecc71; }
+.toast.error i { color: #e74c3c; }
+
+/* Animations d'entrée et de sortie */
+@keyframes slideInDown { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes fadeOut { to { opacity: 0; transform: translateY(-20px); } }
+
+/* Pied de page centré globalement */
+footer {
+    text-align: center;
+    padding: 30px 20px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    margin-top: auto;
+    width: 100%;
+}
+
+/* Adaptation pour les écrans de taille moyenne */
+@media (max-width: 1200px) {
     .hero-container {
-        flex-direction: column;
-        gap: 2rem;
-    }
-    
-    .search-card {
-        min-width: 100%;
-        padding: 1.5rem;
-    }
-
-    .hero-content h1 {
-        font-size: 2.5rem;
+        flex-direction: column-reverse; /* Inverse l'ordre : recherche en haut */
         text-align: center;
+        gap: 40px;
     }
-
-    .rating-badge {
-        display: flex;
-        justify-content: center;
-        margin: 0 auto 2rem auto;
-    }
-    
-    .partners-logos {
-        justify-content: center;
-    }
-    
-    .partners-title {
-        text-align: center;
-    }
+    .hero-text h1 { font-size: 3rem; }
+    .logos-grid { justify-content: center; }
+    .hero-card { min-width: 100%; }
 }
 
+/* Adaptation pour les téléphones mobiles */
+@media (max-width: 600px) {
+    nav { padding: 15px 15px; }
+    .logo { font-size: 20px; }
+    #userDisplay { display: none; }
+    .hero-card { padding: 20px 15px; }
+    .row { flex-direction: column; gap: 0; }
+    .hero-text h1 { font-size: 2rem; }
+    .partner-logo { height: 35px; }
+    .result-item { flex-direction: column; align-items: flex-start; gap: 15px; }
+    .result-item div:last-child { width: 100%; border-top: 1px solid #eee; padding-top: 10px; margin-top: 10px; }
+}
 
 
