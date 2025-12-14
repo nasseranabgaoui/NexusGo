@@ -72,8 +72,6 @@ Voici comment est organisé le code source de l'application :
 nexusgo/
 │
 ├── backend/                  # Partie Serveur (API Node.js/Express)
-│   ├── controller/           # Logique métier
-│   │   └── auth.controller.js  # Gestion de l'inscription
 │   ├── models/               # Modèles de données (Mongoose schemas)
 │   │   ├── Booking.js          # Structure d'une réservation
 │   │   ├── Ride.js             # Structure d'un trajet
