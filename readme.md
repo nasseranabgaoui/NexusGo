@@ -25,7 +25,7 @@ MONGO_URI=votre_lien_mongodb
 JWT_SECRET=votre_cle_secrete
 ```
 
-### 3\. Initialisation (Important)
+### 3\. Initialisation 
 
 Pour créer les utilisateurs de test (car pas d'inscription publique), lancez :
 
