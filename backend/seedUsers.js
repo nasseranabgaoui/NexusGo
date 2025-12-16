@@ -38,7 +38,7 @@ async function seed() {
     await mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/Nexusgo");
     console.log("Connecté à MongoDB pour le seed");
 
-    // Nettoyer la collection existante pour éviter les doublons
+    
     await User.deleteMany({});
     console.log("Anciens utilisateurs supprimés");
 
