@@ -2,42 +2,31 @@ var express = require("express");
 var router = express.Router();
 var Ride = require("../models/Ride");
 
-// Recherche
-router.get("/", async function(req, res) {
-    try {
-        var villeDepart = req.query.villeDepart;
-        var villeArrivee = req.query.villeArrivee;
-        var date = req.query.date;
-        var prixMax = req.query.prixMax; 
-        
-        var filter = {};
+router.get("/", async (req, res) => {
+    var query = {};
 
-        if (villeDepart) filter.villeDepart = new RegExp(villeDepart, 'i');
-        if (villeArrivee) filter.villeArrivee = new RegExp(villeArrivee, 'i');
-        if (date) filter.date = Number(date);
-        
-        // Ajout du filtre Prix Max si présent
-        if (prixMax) {
-            filter.prix = { $lte: Number(prixMax) };
-        }
-        
-        filter.nbPlaces = { $gt: 0 };
-
-        var rides = await Ride.find(filter);
-        res.json(rides);
-    } catch (err) {
-        res.status(500).json({ error: "Erreur serveur" });
+    if (req.query.villeDepart) {
+        query.villeDepart = req.query.villeDepart;
     }
-});
+    if (req.query.villeArrivee) {
+        query.villeArrivee = req.query.villeArrivee;
+    }
+    if (req.query.date) {
+        query.date = req.query.date;
+    }
 
-// Création
-router.post("/", async function(req, res) {
+    if (req.query.prixMax) {
+        query.prix = { $lte: req.query.prixMax }; 
+    }
+    
+    // Le filtre pour les places disponibles
+    query.nbPlaces = { $gt: 0 };
+
     try {
-        var newRide = new Ride(req.body);
-        var savedRide = await newRide.save();
-        res.status(201).json({ message: "Trajet créé", ride: savedRide });
-    } catch (err) {
-        res.status(400).json({ error: "Erreur données" });
+        var rides = await Ride.find(query).sort({ date: 1 });
+        res.json(rides);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 });
 

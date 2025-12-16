@@ -1,5 +1,6 @@
 var bcrypt = require("bcrypt");
 var User = require("../models/User"); 
+var jwt = require("jsonwebtoken"); 
 
 // LOGIN
 exports.login = async (req, res) => {
@@ -22,10 +23,24 @@ exports.login = async (req, res) => {
         return res.status(400).json({ message: "Email ou mot de passe incorrect" });
     }
 
-    // On renvoie le token et les infos
+    // Création du jeton JWT sécurisé
+    const token = jwt.sign(
+        { userId: user._id, email: user.email, prenom: user.prenom }, 
+        process.env.JWT_SECRET || 'MaCleSecrete',
+        { expiresIn: '24h' }
+    );
+    
+    // Envoi du jeton dans un Cookie HTTP-Only
+    res.cookie('jwt', token, {
+        httpOnly: true, // Sécurité XSS
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        maxAge: 24 * 60 * 60 * 1000 
+    });
+
+    // On renvoie les informations utilisateur (SANS le token dans le JSON)
     res.json({
-        message: "Bienvenue",
-        token: "TOKEN-NEXUSGO",
+        message: "Connexion réussie",
         user: {
             prenom: user.prenom,
             email: user.email

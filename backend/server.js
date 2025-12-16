@@ -1,5 +1,6 @@
 var express = require("express");
 var database = require("./database");
+var cookieParser = require("cookie-parser"); 
 require("dotenv").config();
 
 var app = express();
@@ -7,11 +8,15 @@ var app = express();
 // Middleware JSON
 app.use(express.json());
 
+// Middleware Cookie Parser
+app.use(cookieParser()); 
+
 // Middleware CORS
 app.use(function (request, response, next) {
-    response.setHeader('Access-Control-Allow-Origin', '*');
+    response.setHeader('Access-Control-Allow-Origin', 'https://nexusgo.netlify.app'); 
     response.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    response.setHeader('Access-Control-Allow-Headers', '*');
+    response.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    response.setHeader('Access-Control-Allow-Credentials', 'true'); 
     next();
 });
 
@@ -29,7 +34,6 @@ var PORT = process.env.PORT || 3000;
 app.listen(PORT, function() {
     console.log("Server running on http://localhost:" + PORT);
 });
-
 
 
 

@@ -1,4 +1,4 @@
-const API_URL = "https://nexusgo.onrender.com"; // Assure-toi que c'est la bonne URL locale ou distante
+const API_URL = "https://nexusgo.onrender.com"; 
 
 document.addEventListener("DOMContentLoaded", function() {
     
@@ -23,7 +23,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 const data = await res.json();
 
                 if (res.ok) {
-                    localStorage.setItem("token", data.token);
                     localStorage.setItem("firstName", data.user.prenom);
                     localStorage.setItem("email", data.user.email);
                     checkAuth();
@@ -39,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // 3. Recherche (MODIFIÉ)
+    // 3. Recherche 
     const searchForm = document.getElementById("searchForm");
     if (searchForm) {
         searchForm.addEventListener("submit", async function(event) {
@@ -55,9 +54,9 @@ document.addEventListener("DOMContentLoaded", function() {
             if (dateRaw) {
                 url += "&date=" + formatDate(dateRaw);
             }
-            // Ajout du paramètre à l'URL si rempli
+            // 
             if (priceMax) {
-                url += "&prixMax=" + priceMax;
+                url += "&prixMax=" + priceMax; 
             }
 
             try {
@@ -143,7 +142,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-/* --- FONCTIONS UTILITAIRES --- */
+/* FONCTIONS UTILITAIRES */
 
 function showNotification(message, type = 'success') {
     let container = document.getElementById('toast-container');
@@ -171,13 +170,12 @@ function showNotification(message, type = 'success') {
 }
 
 function checkAuth() {
-    const token = localStorage.getItem("token");
     const firstName = localStorage.getItem("firstName");
     const authView = document.getElementById("auth-view");
     const appView = document.getElementById("app-view");
     const userDisplay = document.getElementById("userDisplay");
 
-    if (token) {
+    if (firstName) { 
         if (authView) authView.classList.add("hidden");
         if (appView) appView.classList.remove("hidden");
         if (userDisplay) userDisplay.innerHTML = `<i class="fa-solid fa-user"></i> ${firstName}`;
@@ -189,7 +187,7 @@ function checkAuth() {
 
 function logout() {
     localStorage.clear();
-    window.location.reload();
+    window.location.reload(); 
 }
 
 function bookRide(rideId) {
