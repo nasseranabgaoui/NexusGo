@@ -16,10 +16,12 @@ router.get("/", async (req, res) => {
     }
 
     if (req.query.prixMax) {
-        query.prix = { $lte: req.query.prixMax }; 
+        const maxPriceNumber = parseFloat(req.query.prixMax);
+        
+        if (!isNaN(maxPriceNumber)) {
+            query.prix = { $lte: maxPriceNumber }; 
+        }
     }
-    
-    // Le filtre pour les places disponibles
     query.nbPlaces = { $gt: 0 };
 
     try {
